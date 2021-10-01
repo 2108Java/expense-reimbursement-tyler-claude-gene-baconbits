@@ -6,7 +6,7 @@ import java.util.List;
 import com.revature.models.Ticket;
 import com.revature.utilities.ConnectionDispatch;
 
-public class TicketDaoImp implements TicketDao {
+public class TicketDaoImp implements TicketDao, TicketHistoryDao {
 
 	ConnectionDispatch dispatch = new ConnectionDispatch();
 	
@@ -78,6 +78,7 @@ public class TicketDaoImp implements TicketDao {
 		return tickets;
 	}
 
+	
 	@Override
 	public boolean updateTicket() {
 		
@@ -91,6 +92,48 @@ public class TicketDaoImp implements TicketDao {
 		
 		boolean success = false;
 		
+		return success;
+	}
+	// Ticket History Methods
+
+	@Override
+	public boolean insertTimeStamp() {
+		boolean success = false;
+		
+		String sql = "INSERT INTO ticket_history() VALUES ()";
+		
+		success = dispatch.executeBoolean(sql);
+		
+		return success;
+	}
+
+	@Override
+	public void selectATimeStamp() {
+		// TODO find out what Tyler is doing with the timestamps and see if I have to use a date object.
+		
+	}
+
+	@Override
+	public void selectYourOwnTimeStamp() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void selectEmployeeTimeStamp() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void selectAllTimeStamps() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public boolean deleteTimeStamp() {
+		boolean success = false;
 		return success;
 	}
 
