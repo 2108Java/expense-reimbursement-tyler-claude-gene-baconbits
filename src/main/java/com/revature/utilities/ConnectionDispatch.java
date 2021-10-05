@@ -33,8 +33,8 @@ public class ConnectionDispatch {
 		
 		Connection conn = DriverManager.getConnection(URL, USERNAME, PASSWORD);
 		
-		
 		return conn;
+		
 	}
 	
 	
@@ -70,7 +70,10 @@ public class ConnectionDispatch {
 			ResultSet results = prepared.executeQuery();
 			
 			while (results.next()) { 
-				// Make the employee.
+//				worker.setId(results.getInt("employee_id"));
+//				worker.setFirstName(results.getString("first_name"));
+//				worker.setLastName(results.getString("last_name"));
+//				worker.setEmail(results.getString("email"));
 			}
 		} catch (SQLException e) {
 			
@@ -94,7 +97,8 @@ public class ConnectionDispatch {
 			ResultSet result = prepared.executeQuery();
 			
 			while(result.next()) {
-				// Make the ticket
+//				ticket.setId(result.getInt("ticket_id"));
+//				ticket.set
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -117,6 +121,14 @@ public class ConnectionDispatch {
 			
 			while(results.next()) {
 				// make the ticket list.
+				/*
+				 * tickets.add(
+				 * 			new Ticket(
+				 * 					
+				 * ));
+				 * 
+				 * 
+				 * */
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -126,4 +138,8 @@ public class ConnectionDispatch {
 		
 		return tickets;
 	}
+	
+	
+	// Make the ticket histories.
+	
 }

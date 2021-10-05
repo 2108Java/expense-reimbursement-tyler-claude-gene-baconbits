@@ -5,6 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import com.revature.models.Employee;
 import com.revature.utilities.ConnectionDispatch;
 
 public class EmployeeDaoImp implements EmployeeDao {
@@ -13,7 +14,7 @@ public class EmployeeDaoImp implements EmployeeDao {
 	Connection conn;
 	
 	@Override
-	public boolean insertEmployee() {
+	public boolean insertEmployee(String username, String first_name, String last_name, String email) {
 		
 		boolean success = false;
 		
@@ -42,15 +43,18 @@ public class EmployeeDaoImp implements EmployeeDao {
 	}
 
 	@Override
-	public void selectEmployeeByUserName() {
+	public Employee selectEmployeeByUserName(String username) {
 		
+		Employee emp = new Employee();
 		
 		String sql = "SELECT * FROM employee_table WHERE username = ?";
 		
 		// append the username. 
 		
-		dispatch.executeEmployee(sql);
+		emp = dispatch.executeEmployee(sql);
 		
+		
+		return emp;
 //		try {
 //			
 //			dispatch.GetConnection();
@@ -71,16 +75,31 @@ public class EmployeeDaoImp implements EmployeeDao {
 	}
 
 	@Override
-	public void selectEmployeeById() {
+	public Employee selectEmployeeById(int id) {
 		
+		Employee emp = new Employee();
 		String sql = "SELECT * FROM employee_table WHERE employee_id = ?";
 		
 		// append the employee ID.
 		
-		dispatch.executeEmployee(sql);
+		emp = dispatch.executeEmployee(sql);
 		
+		
+		return emp;
 		
 
+	}
+
+	@Override
+	public boolean updateEmployeePasswordByUsername() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean deleteEmployee() {
+		// TODO Auto-generated method stub
+		return false;
 	}
 
 }

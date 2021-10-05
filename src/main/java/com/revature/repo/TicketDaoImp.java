@@ -11,7 +11,7 @@ public class TicketDaoImp implements TicketDao, TicketHistoryDao {
 	ConnectionDispatch dispatch = new ConnectionDispatch();
 	
 	@Override
-	public boolean createTicket() {
+	public boolean createTicket(int employee_id, double amount, String type, String description, int status) {
 		boolean success = false;
 		
 		String sql = "INSERT INTO ticket_table() VALUES ()";
@@ -25,10 +25,10 @@ public class TicketDaoImp implements TicketDao, TicketHistoryDao {
 	}
 
 	@Override
-	public Ticket selectTicket() {
+	public Ticket selectTicket(int id) {
 		Ticket selectedTicket = new Ticket();
 		
-		String sql = "SELECT * FROM ticket_table WHERE () = ?";
+		String sql = "SELECT * FROM ticket_table WHERE employee_id = ?";
 		
 		// prepare the ticket
 		
@@ -38,12 +38,12 @@ public class TicketDaoImp implements TicketDao, TicketHistoryDao {
 	}
 
 	@Override
-	public List<Ticket> selectYourOwnTickets() {
+	public List<Ticket> selectYourOwnTickets(int employee_id) {
 
 
 		List<Ticket> selectedTickets = new ArrayList<>();
 		
-		String sql = "SELECT * FROM ticket_table WHERE () = ?";
+		String sql = "SELECT * FROM ticket_table WHERE employee_id = ?";
 		
 		// prepare the ticket list.
 		
@@ -51,13 +51,25 @@ public class TicketDaoImp implements TicketDao, TicketHistoryDao {
 		
 		return selectedTickets;
 	}
+	
+	@Override
+	public List<Ticket> selectYourTicketsByStatus(int employee_id, int status) {
+		List<Ticket> tickets = new ArrayList<>();
+		
+		String sql = "SELECT * FROM ticket_table WHERE employee_id = ? AND status = ?";
+		
+		// make the ticket list.
+		tickets = dispatch.executeTickets(sql);
+		
+		return tickets;
+	}
 
 	@Override
-	public List<Ticket> selectEmployeeTickets() {
+	public List<Ticket> selectEmployeeTickets(int employee_id) {
 				
 		List<Ticket> selectedTickets = new ArrayList<>();
 		
-		String sql =  "SELECT * FROM ticket_table WHERE () = ?";
+		String sql =  "SELECT * FROM ticket_table WHERE employee_id = ?";
 		
 		// make the ticket list. 
 		
@@ -66,6 +78,20 @@ public class TicketDaoImp implements TicketDao, TicketHistoryDao {
 		return selectedTickets;
 	}
 
+	
+	@Override
+	public List<Ticket> selectTicketsByStatus(int employee_id, int status) {
+		
+		List<Ticket> selectedTickets = new ArrayList<>();
+
+		String sql = "SELECT * FROM ticket_table WHERE employee_id = ? AND status = ?";
+		
+		selectedTickets = dispatch.executeTickets(sql);
+		
+		return selectedTickets;
+		
+	}
+	 
 	@Override
 	public List<Ticket> selectAllTickets() {
 		
@@ -80,20 +106,26 @@ public class TicketDaoImp implements TicketDao, TicketHistoryDao {
 
 	
 	@Override
-	public boolean updateTicket() {
+	public boolean updateTicket(int id) {
 		
-		boolean success = false;
+		String sql = "UPDATE () IN ticket_table SET ()";
+		
+		boolean success = dispatch.executeBoolean(sql);
 				
 		return success;
 	}
 
 	@Override
-	public boolean deleteTicket() {
+	public boolean deleteTicket(int id) {
 		
-		boolean success = false;
+		String sql = "DELETE IN ticket_table WHERE id = ()";
+		
+		boolean success = dispatch.executeBoolean(sql);
 		
 		return success;
 	}
+	
+	 
 	// Ticket History Methods
 
 	@Override
@@ -136,5 +168,9 @@ public class TicketDaoImp implements TicketDao, TicketHistoryDao {
 		boolean success = false;
 		return success;
 	}
+
+	
+
+	
 
 }
