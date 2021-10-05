@@ -16,7 +16,7 @@
 	<dependency>
 	    <groupId>io.javalin</groupId>
 	    <artifactId>javalin</artifactId>
-	    <version>3.13.11</version>
+	    <version>4.0.1</version>
 	</dependency>
 	<!-- https://mvnrepository.com/artifact/org.apache.logging.log4j/log4j-core -->
 <dependency>

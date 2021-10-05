@@ -125,7 +125,7 @@ public class Employee {
 
 
 
-	public boolean isManager() {
+	public boolean getIsManager() {
 		return isManager;
 	}
 
