@@ -40,65 +40,28 @@ public class ConnectionDispatch {
 	
 	// Should execute to the database any needed booleans that come this way.
 	
-	public boolean executeBoolean(String sql) {
-		boolean success = false;
-		
-		try {
-		getConnection();
-		
-		prepared = connect.prepareStatement(sql);
-		
-		success = prepared.execute();
-		} catch (SQLException e) { 
-			e.printStackTrace();
-		}
-		return success;
-		
-	}
+	
 	
 	// This method should get any employees that come this way.
 
-	public Employee executeEmployee(String sql) {
-		worker = new Employee();
-		
-		try {
-			
-			getConnection();
-			
-			prepared = connect.prepareStatement(sql);
-			
-			ResultSet results = prepared.executeQuery();
-			
-			while (results.next()) { 
-//				worker.setId(results.getInt("employee_id"));
-//				worker.setFirstName(results.getString("first_name"));
-//				worker.setLastName(results.getString("last_name"));
-//				worker.setEmail(results.getString("email"));
-			}
-		} catch (SQLException e) {
-			
-			e.printStackTrace();
-		}
-		
-		
-		return worker;
-	}
 	
-	// This method should generate a single ticket
-	
-	public Ticket executeTicket(String sql) {
+	public Ticket executeTicket(PreparedStatement prepared) {
 		ticket = new Ticket();
 		
 		try {
 			getConnection();
 			
-			prepared = connect.prepareStatement(sql);
+
 			
 			ResultSet result = prepared.executeQuery();
 			
 			while(result.next()) {
-//				ticket.setId(result.getInt("ticket_id"));
-//				ticket.set
+				ticket.setId(result.getInt("ticket_id"));
+				ticket.setEmployeeId(result.getInt("employee_id"));
+				ticket.setAmount(result.getDouble("amount"));
+				ticket.setType(result.getString("type"));
+				ticket.setDescription(result.getString("description"));
+				ticket.setStatus(result.getString("status"));
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -109,26 +72,27 @@ public class ConnectionDispatch {
 		
 	}
 	
-	public List<Ticket> executeTickets(String sql) {
+	public List<Ticket> executeTickets(PreparedStatement prepared) {
 		tickets = new ArrayList<>();
 		
 		try {
 			getConnection();
 			
-			prepared = connect.prepareStatement(sql);
-			
 			ResultSet results = prepared.executeQuery();
 			
 			while(results.next()) {
-				// make the ticket list.
-				/*
-				 * tickets.add(
-				 * 			new Ticket(
-				 * 					
-				 * ));
-				 * 
-				 * 
-				 * */
+				tickets.add(
+						new Ticket(
+								
+								(results.getInt("account_id")),
+								(results.getInt("employee_id")),
+								(results.getDouble("amount")),
+								(results.getString("type")),
+								(results.getString("description")),
+								(results.getString("status"))
+								
+								));
+				
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block

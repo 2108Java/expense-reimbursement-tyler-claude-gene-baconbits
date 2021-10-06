@@ -8,7 +8,7 @@ public interface TicketDao {
 	
 	// Creates a new Ticket.
 	
-	public boolean createTicket(int employee_id, double amount, String type, String description, int status);
+	public boolean createTicket(int employee_id, double amount, String type, String description, String status);
 	
 	// Select Ticket(s) for the employee and the Manager.
 	
@@ -16,9 +16,9 @@ public interface TicketDao {
 	
 	public List<Ticket> selectYourOwnTickets(int employee_id);
 	
-	public List<Ticket> selectYourTicketsByStatus(int employee_id, int status);
+	public List<Ticket> selectYourTicketsByStatus(int employee_id, String status);
 	
-	public List<Ticket> selectTicketsByStatus(int employee_id, int status);
+	public List<Ticket> selectTicketsByStatus(int employee_id, String status);
 	
 	public List<Ticket> selectEmployeeTickets(int employee_id);
 	

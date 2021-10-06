@@ -1,5 +1,8 @@
 package com.revature.repo;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,16 +12,32 @@ import com.revature.utilities.ConnectionDispatch;
 public class TicketDaoImp implements TicketDao, TicketHistoryDao {
 
 	ConnectionDispatch dispatch = new ConnectionDispatch();
+	Connection conn;
 	
 	@Override
-	public boolean createTicket(int employee_id, double amount, String type, String description, int status) {
+	public boolean createTicket(int employee_id, double amount, String type, String description, String status) {
 		boolean success = false;
 		
-		String sql = "INSERT INTO ticket_table() VALUES ()";
+		String sql = "INSERT INTO ticket_table(employee_id, amount, type, description, status) VALUES (?, ?, ?, ?)";
 		
-		// Make the ticket.
+		try {
+			dispatch.getConnection();
+			
+			PreparedStatement ps = conn.prepareStatement(sql);
+			
+			ps.setInt(1, employee_id);
+			ps.setDouble(2, amount);
+			ps.setString(3, type);
+			ps.setString(4, description);
+			ps.setString(5, status);
+			
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
-		success = dispatch.executeBoolean(sql);
+		
 		
 		
 		return success;
@@ -27,12 +46,24 @@ public class TicketDaoImp implements TicketDao, TicketHistoryDao {
 	@Override
 	public Ticket selectTicket(int id) {
 		Ticket selectedTicket = new Ticket();
+		PreparedStatement ps;
 		
 		String sql = "SELECT * FROM ticket_table WHERE employee_id = ?";
 		
-		// prepare the ticket
+		try {
+			ps = conn.prepareStatement(sql);
+			
+			ps.setInt(1, id);
+			
+			selectedTicket = dispatch.executeTicket(ps);
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
-		selectedTicket = dispatch.executeTicket(sql);
+		
+		
 		
 		return selectedTicket;
 	}
@@ -42,51 +73,93 @@ public class TicketDaoImp implements TicketDao, TicketHistoryDao {
 
 
 		List<Ticket> selectedTickets = new ArrayList<>();
-		
+		PreparedStatement ps;
 		String sql = "SELECT * FROM ticket_table WHERE employee_id = ?";
 		
-		// prepare the ticket list.
+		try {
+			ps = conn.prepareStatement(sql);
+			
+			ps.setInt(1, employee_id);
+			
+			selectedTickets = dispatch.executeTickets(ps);
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
-		selectedTickets = dispatch.executeTickets(sql);
 		
 		return selectedTickets;
 	}
 	
 	@Override
-	public List<Ticket> selectYourTicketsByStatus(int employee_id, int status) {
+	public List<Ticket> selectYourTicketsByStatus(int employee_id, String status) {
+		PreparedStatement ps;
 		List<Ticket> tickets = new ArrayList<>();
 		
 		String sql = "SELECT * FROM ticket_table WHERE employee_id = ? AND status = ?";
 		
-		// make the ticket list.
-		tickets = dispatch.executeTickets(sql);
+		try {
+			ps = conn.prepareStatement(sql);
+			ps.setInt(1, employee_id);
+			ps.setString(2, status);
+			
+			tickets = dispatch.executeTickets(ps);
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
 		
 		return tickets;
 	}
 
 	@Override
 	public List<Ticket> selectEmployeeTickets(int employee_id) {
-				
+		
 		List<Ticket> selectedTickets = new ArrayList<>();
+		PreparedStatement ps;
 		
 		String sql =  "SELECT * FROM ticket_table WHERE employee_id = ?";
 		
-		// make the ticket list. 
+		try {
+
+			ps = conn.prepareStatement(sql);
+			ps.setInt(1, employee_id);
+			
+			selectedTickets = dispatch.executeTickets(ps);
 		
-		selectedTickets = dispatch.executeTickets(sql);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 		return selectedTickets;
 	}
 
 	
 	@Override
-	public List<Ticket> selectTicketsByStatus(int employee_id, int status) {
+	public List<Ticket> selectTicketsByStatus(int employee_id, String status) {
 		
+		PreparedStatement ps;
 		List<Ticket> selectedTickets = new ArrayList<>();
 
 		String sql = "SELECT * FROM ticket_table WHERE employee_id = ? AND status = ?";
 		
-		selectedTickets = dispatch.executeTickets(sql);
+		try {
+			ps = conn.prepareStatement(sql);
+
+			ps.setInt(1, employee_id);
+			ps.setString(2, status);
+			
+			selectedTickets = dispatch.executeTickets(ps);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 		
 		return selectedTickets;
 		
@@ -96,10 +169,20 @@ public class TicketDaoImp implements TicketDao, TicketHistoryDao {
 	public List<Ticket> selectAllTickets() {
 		
 		List<Ticket> tickets = new ArrayList<>();
+		PreparedStatement ps;
 		
 		String sql = "SELECT * FROM ticket_table";
 		
-		tickets = dispatch.executeTickets(sql);
+		try {
+			ps = conn.prepareStatement(sql);
+
+			tickets = dispatch.executeTickets(ps);
+		
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 		
 		return tickets;
 	}
@@ -107,20 +190,20 @@ public class TicketDaoImp implements TicketDao, TicketHistoryDao {
 	
 	@Override
 	public boolean updateTicket(int id) {
-		
+		boolean success = false;
 		String sql = "UPDATE () IN ticket_table SET ()";
 		
-		boolean success = dispatch.executeBoolean(sql);
-				
+	
 		return success;
 	}
 
 	@Override
 	public boolean deleteTicket(int id) {
+		boolean success = false;
 		
 		String sql = "DELETE IN ticket_table WHERE id = ()";
 		
-		boolean success = dispatch.executeBoolean(sql);
+		
 		
 		return success;
 	}
@@ -134,8 +217,7 @@ public class TicketDaoImp implements TicketDao, TicketHistoryDao {
 		
 		String sql = "INSERT INTO ticket_history() VALUES ()";
 		
-		success = dispatch.executeBoolean(sql);
-		
+	
 		return success;
 	}
 

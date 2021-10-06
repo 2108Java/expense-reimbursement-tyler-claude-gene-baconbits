@@ -6,7 +6,7 @@ public interface EmployeeDao {
 
 	// Create an employee
 	
-	public boolean insertEmployee(String username, String first_name, String last_name, String email);
+	public boolean insertEmployee(String username, String password, String first_name, String last_name, String email);
 	
 	// Selects an Employee by User Name and by ID
 	

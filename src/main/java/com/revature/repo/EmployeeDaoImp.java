@@ -14,29 +14,34 @@ public class EmployeeDaoImp implements EmployeeDao {
 	Connection conn;
 	
 	@Override
-	public boolean insertEmployee(String username, String first_name, String last_name, String email) {
+	public boolean insertEmployee(String username, String password, String first_name, String last_name, String email) {
 		
 		boolean success = false;
 		
-		String sql = "INSERT INTO employee_table() VALUES ()";
-		
-		// append the appropriate values.
+		String sql = "INSERT INTO employee_table(username, password, first_name, last_name, email, is_manager) VALUES (?,?,?,?,?,?)";
 		
 		
-		success = dispatch.executeBoolean(sql);
-//		PreparedStatement ps;
-//		String sql = "";
-//		
-//		try { 
-//			
-////		dispatch.GetConnection();
-////		ps = conn.prepareStatement(sql);
-////		
-////		success = ps.execute();
-//		
-//		}catch (SQLException e) {
-//			e.printStackTrace();
-//		}
+		PreparedStatement ps;
+		
+		
+		try { 
+			
+		dispatch.getConnection();
+		
+		ps = conn.prepareStatement(sql);
+		
+		ps.setString(1, username);
+		ps.setString(2, password);
+		ps.setString(3, first_name);
+		ps.setString(4, last_name);
+		ps.setString(5, email);
+		ps.setBoolean(6, false);
+		
+		success = ps.execute();
+	
+		}catch (SQLException e) {
+			e.printStackTrace();
+		}
 		
 		
 		return success;
@@ -44,14 +49,37 @@ public class EmployeeDaoImp implements EmployeeDao {
 
 	@Override
 	public Employee selectEmployeeByUserName(String username) {
-		
+		PreparedStatement ps;
 		Employee emp = new Employee();
 		
 		String sql = "SELECT * FROM employee_table WHERE username = ?";
+	
+		try {
+			dispatch.getConnection();
+			
+			
+			
+			ps = conn.prepareStatement(sql);
+			ps.setString(1, username);
+			
+			ResultSet rs = ps.executeQuery();
+			
+			while(rs.next()) {
+				
+				emp.setEmpId(rs.getInt("employee_id"));
+				emp.setUserName(rs.getString("username"));
+				emp.setPassword(rs.getString("password"));
+				emp.setFirstName(rs.getString("first_name"));
+				emp.setLastName(rs.getString("last_name"));
+				emp.setEmail(rs.getString("email"));
+				emp.setManager(rs.getBoolean("is_manager"));
+				
+			}
+			} catch (SQLException e) { 
+				e.printStackTrace();
+			}
 		
-		// append the username. 
 		
-		emp = dispatch.executeEmployee(sql);
 		
 		
 		return emp;
@@ -76,13 +104,33 @@ public class EmployeeDaoImp implements EmployeeDao {
 
 	@Override
 	public Employee selectEmployeeById(int id) {
-		
+		PreparedStatement ps;
 		Employee emp = new Employee();
 		String sql = "SELECT * FROM employee_table WHERE employee_id = ?";
 		
-		// append the employee ID.
-		
-		emp = dispatch.executeEmployee(sql);
+		try {
+			dispatch.getConnection();
+			
+			ps = conn.prepareStatement(sql);
+			
+			ps.setInt(1, id);
+			
+			ResultSet rs = ps.executeQuery();
+			
+			while(rs.next()) {			
+				
+				emp.setEmpId(rs.getInt("employee_id"));
+				emp.setUserName(rs.getString("username"));
+				emp.setPassword(rs.getString("password"));
+				emp.setFirstName(rs.getString("first_name"));
+				emp.setLastName(rs.getString("last_name"));
+				emp.setEmail(rs.getString("email"));
+				emp.setManager(rs.getBoolean("is_manager"));
+			}
+				
+			} catch (SQLException e) { 
+				e.printStackTrace();
+			}
 		
 		
 		return emp;
