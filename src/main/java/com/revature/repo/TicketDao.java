@@ -28,6 +28,10 @@ public interface TicketDao {
 	
 	public boolean updateTicket(int id);
 	
+	public boolean updateTicketStatus(int id, String status);
+	
+	
+	
 	// Deletes a Ticket if need be.
 	
 	public boolean deleteTicket(int id);

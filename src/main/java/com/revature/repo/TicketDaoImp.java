@@ -193,7 +193,30 @@ public class TicketDaoImp implements TicketDao, TicketHistoryDao {
 		boolean success = false;
 		String sql = "UPDATE () IN ticket_table SET ()";
 		
+		
+		
 	
+		return success;
+	}
+	
+	@Override
+	public boolean updateTicketStatus(int id, String status) {
+		boolean success = false;
+		
+		String sql = "UPDATE ticket_table SET status = ? WHERE employee_id = ?";
+		try {
+			
+		PreparedStatement ps = conn.prepareStatement(sql);
+		
+		ps.setInt(1, id);
+		ps.setString(2, status);
+		
+		success = ps.execute();
+		
+		} catch(SQLException e) {
+			e.printStackTrace();
+		}
+		
 		return success;
 	}
 
@@ -250,6 +273,8 @@ public class TicketDaoImp implements TicketDao, TicketHistoryDao {
 		boolean success = false;
 		return success;
 	}
+
+
 
 	
 

@@ -48,7 +48,7 @@ public class EmployeeDaoImp implements EmployeeDao {
 	}
 
 	@Override
-	public Employee selectEmployeeByUserName(String username) {
+	public Employee selectByUsername(String username) {
 		PreparedStatement ps;
 		Employee emp = new Employee();
 		
@@ -148,6 +148,31 @@ public class EmployeeDaoImp implements EmployeeDao {
 	public boolean deleteEmployee() {
 		// TODO Auto-generated method stub
 		return false;
+	}
+
+	@Override
+	public boolean selectUsernameAndPass(String username, String password) {
+		boolean goodOps = false;
+		
+		String sql = "SELECT * FROM employee_table WHERE username = ? AND password = ?";
+		
+		try {
+			dispatch.getConnection();
+			
+			PreparedStatement ps = conn.prepareStatement(sql);
+			
+			ps.setString(1, username);
+			ps.setString(2, password);
+			
+			goodOps = ps.execute();
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
+		return goodOps;
 	}
 
 }
