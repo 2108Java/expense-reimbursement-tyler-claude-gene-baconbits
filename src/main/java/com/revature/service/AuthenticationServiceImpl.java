@@ -17,9 +17,9 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 		return empDao.selectByUserName();
 	}
 
-	@Override
-	public boolean authenticate(String username, String password) {
-		return empDao.selectUserNameAndPass();
+//@Override
+	public static boolean authenticate(String username, String password) {
+		return EmployeeDao.selectUserNameAndPass();
 
 	}
 

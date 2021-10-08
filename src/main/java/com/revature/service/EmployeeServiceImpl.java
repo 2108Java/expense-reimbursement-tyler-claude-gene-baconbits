@@ -10,4 +10,10 @@ public class EmployeeServiceImpl implements EmployeeService {
 		return null;
 	}
 
+	@Override
+	public void getAllTickets() {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

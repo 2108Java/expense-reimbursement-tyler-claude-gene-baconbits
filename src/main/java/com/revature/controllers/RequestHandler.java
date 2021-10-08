@@ -1,12 +1,18 @@
-package com.revature.service;
+package com.revature.controllers;
 
-import com.revature.controllers.AuthenticationController;
 import com.revature.repo.EmpDaoImpl;
 import com.revature.repo.EmployeeDao;
 import com.revature.repo.TicketDao;
 import com.revature.repo.TicketDaoImpl;
 import com.revature.repo.TicketHistDao;
 import com.revature.repo.TicketHistDaoImpl;
+import com.revature.service.AuthenticationService;
+import com.revature.service.AuthenticationServiceImpl;
+import com.revature.service.EmployeeService;
+import com.revature.service.EmployeeServiceImpl;
+import com.revature.service.UserService;
+import com.revature.service.UserServiceImpl;
+
 import io.javalin.Javalin;
 import io.javalin.http.Context;
 
@@ -24,10 +30,12 @@ public class RequestHandler {
 	EmployeeService empServ = new EmployeeServiceImpl();
 	
 	AuthenticationController ac = new AuthenticationController(authServ, userServ);
+	EmployeeTicketController ec = new EmployeeTicketController();
+	ManagerTicketsController mc = new ManagerTicketsController();
 	
 	
 	
-	
+	//METHODS
 	public static boolean checkSession(Context ctx) {
 		if(ctx.sessionAttribute("user")!=null) {
 			return true;
@@ -40,31 +48,16 @@ public class RequestHandler {
 	
 	
 	public static void setupEndPoints(Javalin app) {
-		
-				
+						
 		//endpoint for LOGIN page
 			app.get("/", ctx -> 
 				ctx.req.getRequestDispatcher("login.html").forward(ctx.req, ctx.res));
 			
 			
 			app.get("/login", ctx -> 			
-					ctx.req.getRequestDispatcher("login.html").forward(ctx.req, ctx.res));
-	
+//					ctx.req.getRequestDispatcher("login.html").forward(ctx.req, ctx.res)); //think I actually want to call the authentication method to return correct page
+					ctx.redirect(AuthenticationController.authenticateUser(ctx)));
 		
-		
-		//endpoint for AUTHENTICATED
-			//I think this is the one that needs a forward request
-			app.post("/authenticate", ctx -> {
-					try {
-						ac.authenticateUser(ctx);
-					} catch (Exception e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-				});
-			
- 
-			
 		
 		
 			
@@ -82,15 +75,18 @@ public class RequestHandler {
 		
 		//endpoint for SUBMIT-TICKET
 			//don't use GET, because we don't want query-params displayed in search bar
-			app.post("/submitTicket", ctx -> {
+			app.post("/newTicket", ctx -> {
 				if(checkSession(ctx)) {
-					ctx.req.getRequestDispatcher("submitTicket.html").forward(ctx.req, ctx.res);
+					ctx.req.getRequestDispatcher("newTicket.html").forward(ctx.req, ctx.res);
 				} else {
 					ctx.res.sendRedirect("/login");
-				}
+				}				 
+				ctx.redirect(EmployeeTicketController.submitMyTicket(ctx)); 
 			});	
 	
 		
+			
+			
 		//endpoint for VIEW-TICKETS
 			app.get("/viewTickets", ctx -> {
 				if(checkSession(ctx)) {
@@ -98,13 +94,14 @@ public class RequestHandler {
 				} else {
 					ctx.res.sendRedirect("/login");
 				}
+				ctx.redirect(EmployeeTicketController.getAllMyTickets(ctx));
 			});
 	
 				
 		
 		//endpoint for UPDATE-TICKETS
 				//needs to be available only to managers, so write some logic using session-attribute
-				//isManager was inlcuded by Gene in EMPLOYEES table
+				//isManager was included by Gene in EMPLOYEES table
 			app.get("/changeTicketStatus", ctx -> {
 				if(ctx.sessionAttribute("access") == "manager") {
 					ctx.req.getRequestDispatcher("changeTicketStatus.html").forward(ctx.req, ctx.res);

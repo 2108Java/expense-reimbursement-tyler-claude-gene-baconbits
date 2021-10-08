@@ -30,6 +30,11 @@ public class ManagerTicketsController {
 			super();
 			this.mgrServ = mgrServ;
 		}
+		
+		
+		public ManagerTicketsController() {
+			super();
+		}
 
 
 		

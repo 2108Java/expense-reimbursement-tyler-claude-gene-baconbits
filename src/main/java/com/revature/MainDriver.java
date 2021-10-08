@@ -1,6 +1,6 @@
 package com.revature;
 
-import com.revature.service.RequestHandler;
+import com.revature.controllers.RequestHandler;
 
 import io.javalin.Javalin;
 
@@ -12,9 +12,9 @@ public class MainDriver {
 		Javalin app = Javalin.create(config ->
 			  config.addStaticFiles(staticFiles -> 
 			  {
-			    staticFiles.directory = "/public";              // the directory where your files are located
+			    staticFiles.directory = "/public";  // the directory where your files are located in src>main>resources
 			  }
-			)).start(8000);		
+			)).start(8000);	//dao will be on Gene's RDS; front-end will be hosted on Tyler's EC2	
 	
 		
 		RequestHandler.setupEndPoints(app);

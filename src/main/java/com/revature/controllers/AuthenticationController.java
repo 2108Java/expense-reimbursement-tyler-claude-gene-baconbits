@@ -30,26 +30,25 @@ public class AuthenticationController {
 		}
 
 
-	public void authenticateUser(Context ctx) throws ServletException, IOException {
+	public static String authenticateUser(Context ctx) throws ServletException, IOException {
 		String username = ctx.formParam("username");
 		String password = ctx.formParam("password");
 
-		boolean authenticated = authServ.authenticate(username, password);
+		boolean authenticated = AuthenticationService.authenticate(username, password);
 		
 		if(authenticated) {
 			//if authenticated, send to home page and give session credential
-			Employee emp = userServ.getUserByUsername(username);
+			Employee emp = UserService.getUserByUsername(username);
 			ctx.sessionAttribute("user", emp);
 			
 			if(emp.getIsManager()) {
 				ctx.sessionAttribute("access", "manager");
 			} else ctx.sessionAttribute("access", "employee");
-			ctx.res.sendRedirect("/landingPage");
-		
 				} else {
 					ctx.res.setStatus(401);
+					return "/login";
 				}
-		
+			return "/landingPage";
 
 	}
 }

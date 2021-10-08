@@ -10,6 +10,9 @@ public interface UserService {
 	
 	Employee emp = new Employee();
 	
-	public Employee getUserByUsername(String username);
+	public static Employee getUserByUsername(String username) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 
 }
