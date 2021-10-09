@@ -3,7 +3,7 @@ package com.revature.models;
 import java.util.Objects;
 import java.util.ArrayList;
 import java.util.Calendar;
-
+import com.revature.repo.*;
 
 public class Ticket {
 
@@ -14,36 +14,19 @@ public class Ticket {
 	private String description; //provided by employee on submission
 	private RequestType type; //lodging, travel, food, or other
 	private TicketStatus status; //approved, pending, or rejected
-	private ArrayList<Calendar> ticketHistory; 	//to collect timestamp data from the db for display to user
-												//probably will be separate table in db, 
-												//but can be part of TIcket object
+	private ArrayList<TicketStatusEvent> ticketHistory;
 	
 	
 	//CONSTRUCTORS
 	public Ticket() {
 		super();
-		// TODO Auto-generated constructor stub
+		this.ticketHistory = TicketDao.selectAllStatusEventForTicket(this.id);
 	}
 
 
-
-	public Ticket(int id, int employeeId, double amount, RequestType type, String description, TicketStatus status) {
-		super();
-		this.id = id;
-		this.employeeId = employeeId;
-		this.amount = amount;
-		this.type = type;
-		this.description = description;
-		this.status = status;
-	}
-
-
-
-	//METHODS
 	public int getId() {
 		return id;
 	}
-
 
 
 	public void setId(int id) {
@@ -51,11 +34,9 @@ public class Ticket {
 	}
 
 
-
 	public int getEmployeeId() {
 		return employeeId;
 	}
-
 
 
 	public void setEmployeeId(int employeeId) {
@@ -63,11 +44,9 @@ public class Ticket {
 	}
 
 
-
 	public double getAmount() {
 		return amount;
 	}
-
 
 
 	public void setAmount(double amount) {
@@ -75,23 +54,9 @@ public class Ticket {
 	}
 
 
-
-	public RequestType getType() {
-		return type;
-	}
-
-
-
-	public void setType(RequestType type) {
-		this.type = type;
-	}
-
-
-
 	public String getDescription() {
 		return description;
 	}
-
 
 
 	public void setDescription(String description) {
@@ -99,11 +64,19 @@ public class Ticket {
 	}
 
 
+	public RequestType getType() {
+		return type;
+	}
+
+
+	public void setType(RequestType type) {
+		this.type = type;
+	}
+
 
 	public TicketStatus getStatus() {
 		return status;
 	}
-
 
 
 	public void setStatus(TicketStatus status) {
@@ -111,30 +84,19 @@ public class Ticket {
 	}
 
 
-
-	public ArrayList<Calendar> getTicketHistory() {
+	public ArrayList<TicketStatusEvent> getTicketHistory() {
 		return ticketHistory;
 	}
 
 
-
-	public void setTicketHistory(ArrayList<Calendar> ticketHistory) {
+	public void setTicketHistory(ArrayList<TicketStatusEvent> ticketHistory) {
 		this.ticketHistory = ticketHistory;
 	}
 
-
-
-	@Override
-	public String toString() {
-		return "Ticket [id=" + id + ", employeeId=" + employeeId + ", amount=" + amount + ", description=" + description
-				+ ", type=" + type + ", status=" + status + "]"; //excludes ticketHistory
-	}
-
-
-
-
-
 	
+	
+	
+
 	
 	
 }

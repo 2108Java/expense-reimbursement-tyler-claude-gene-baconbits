@@ -29,7 +29,7 @@ public class RequestHandler {
 	UserService userServ = new UserServiceImpl();
 	EmployeeService empServ = new EmployeeServiceImpl();
 	
-	AuthenticationController ac = new AuthenticationController(authServ, userServ);
+	AuthenticationController ac = new AuthenticationController();
 	EmployeeTicketController ec = new EmployeeTicketController();
 	ManagerTicketsController mc = new ManagerTicketsController();
 	
@@ -67,7 +67,8 @@ public class RequestHandler {
 						ctx.req.getRequestDispatcher("landingPage.html").forward(ctx.req, ctx.res);
 					} else {
 						ctx.res.sendRedirect("/login");
-					}
+					} 
+					
 				});
 					
 		
@@ -108,7 +109,11 @@ public class RequestHandler {
 				} else {
 					ctx.res.sendRedirect("/login");
 				}
+				ctx.redirect(ManagerTicketsController.
+						(ctx));
+
 			});
+		
 		
 		
 		

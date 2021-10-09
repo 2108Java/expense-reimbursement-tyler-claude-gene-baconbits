@@ -50,59 +50,59 @@ public class ManagerTicketsController {
 
 		
 		
-		public void getAllTicketsOfStatus(TicketStatus x) {
+		public void getAllTicketsOfStatus(Context ctx){
 				
 		}
 		
 		
 
-		public void getAllPendingTickets() {
+		public void getAllPendingTickets(Context ctx) {
 			
 			
 		}
 		
 		
 		
-		public void getAllApprovedTickets() {
-			
-		}
-
-		
-		
-		public void getAllRejectedTickets() {
-			
-		}
-		
-		
-		
-		public void getAllTicketHistory() {
+		public void getAllApprovedTickets(Context ctx) {
 			
 		}
 
+		
+		
+		public void getAllRejectedTickets(Context ctx) {
+			
+		}
+		
+		
+		
+		public void getAllTicketHistory(Context ctx) {
+			
+		}
+
 
 		
-		public void getSomeTicketAndHist() {
+		public void getSomeTicketAndHist(Context ctx) {
 			
 		}
 		
 		
 		//METHODS for UPDATING TICKETS
-		public void approveTicket() {
+		public void approveTicket(Context ctx) {
 			
 		}
 		
 		
-		public void approveAllPendingTickets() {
+		public void approveAllPendingTickets(Context ctx) {
 			
 		}
 		
 		
-		public void rejectTicket() {
+		public void rejectTicket(Context ctx) {
 			
 		}
 
 		
-		public void changeTicketStatus(TicketStatus from, TicketStatus to) {
+		public void changeTicketStatus(Context ctx) {
 			
 			
 		}

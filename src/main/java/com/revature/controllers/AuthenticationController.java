@@ -23,10 +23,8 @@ public class AuthenticationController {
 	private UserService userServ;
 	
 	//CONSTRUCTORS
-	public AuthenticationController(AuthenticationService authServ, UserService userServ) {
+	public AuthenticationController() {
 		super();
-		this.authServ = authServ;
-		this.userServ = userServ;
 		}
 
 
@@ -40,7 +38,7 @@ public class AuthenticationController {
 			//if authenticated, send to home page and give session credential
 			Employee emp = UserService.getUserByUsername(username);
 			ctx.sessionAttribute("user", emp);
-			
+			ctx.sessionAttribute("empId", emp.getEmpId());
 			if(emp.getIsManager()) {
 				ctx.sessionAttribute("access", "manager");
 			} else ctx.sessionAttribute("access", "employee");
