@@ -77,26 +77,25 @@ public class RequestHandler {
 		//endpoint for SUBMIT-TICKET
 			//don't use GET, because we don't want query-params displayed in search bar
 			app.post("/newTicket", ctx -> {
-				if(checkSession(ctx)) {
-					ctx.req.getRequestDispatcher("newTicket.html").forward(ctx.req, ctx.res);
-				} else {
-					ctx.res.sendRedirect("/login");
-				}				 
-				ctx.redirect(EmployeeTicketController.submitMyTicket(ctx)); 
-			});	
+					if(checkSession(ctx)) {
+						ctx.req.getRequestDispatcher("newTicket.html").forward(ctx.req, ctx.res);
+					} else {
+						ctx.res.sendRedirect("/login");
+					}				 
+					ctx.json(EmployeeTicketController.submitMyTicket(ctx)); 
+				});
 	
 		
 			
-			
 		//endpoint for VIEW-TICKETS
 			app.get("/viewTickets", ctx -> {
-				if(checkSession(ctx)) {
-					ctx.req.getRequestDispatcher("viewTickets.html").forward(ctx.req, ctx.res);
-				} else {
-					ctx.res.sendRedirect("/login");
-				}
-				ctx.redirect(EmployeeTicketController.getAllMyTickets(ctx));
-			});
+					if(checkSession(ctx)) {
+						ctx.req.getRequestDispatcher("viewTickets.html").forward(ctx.req, ctx.res);
+					} else {
+						ctx.res.sendRedirect("/login");
+					}
+					ctx.json(EmployeeTicketController.getAllMyTickets(ctx));
+				});
 	
 				
 		
@@ -109,8 +108,8 @@ public class RequestHandler {
 				} else {
 					ctx.res.sendRedirect("/login");
 				}
-				ctx.redirect(ManagerTicketsController.
-						(ctx));
+//				ctx.redirect(ManagerTicketsController.
+//						(ctx));
 
 			});
 		

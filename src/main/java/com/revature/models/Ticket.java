@@ -93,7 +93,19 @@ public class Ticket {
 		this.ticketHistory = ticketHistory;
 	}
 
-	
+	public String getTypeString() {
+        return type.name();
+    }
+
+	public void setTypeString(String type) {
+	        this.type = RequestType.valueOf(type);
+	    }
+	public String getStatusString() {
+	        return status.name();
+	    }
+	public void setStatusString(String status) {
+	        this.status = TicketStatus.valueOf(status);
+	    }
 	
 	
 

@@ -22,23 +22,21 @@ public class EmployeeTicketController {
 	
 	
 	
-	//METHODS for DISPLAYING THE EMPLOYEE'S TICKETS
+	//METHODS
 		
-		//getAllMyTickets will load by default when user selects "view tickets" from "/landingPage" form 
-		// and handler directs to "/viewTickets" 
-		public static String getAllMyTickets(Context ctx) {
-					if(EmployeeService.getAllTickets()) {
-						return "/allMyTickets.html";
-					} else {
-					ctx.res.setStatus(401);
-					return "/somethingWentWrong.html";
-					}
-		}
+
+			public static Context getAllMyTickets(Context ctx) {
+				int userId = Integer.parseInt(ctx.sessionAttribute("empId"));
+				List<Ticket> allTicketsForUser = new ArrayList<Ticket>();
+				allTicketsForUser = EmployeeService.getAllTicketsForUser(userId);
+				return ctx.json(allTicketsForUser);
+
+			}
 			
 			
 				
 				
-			public Context getAllMyTicketsOfStatus(Context ctx) {
+			public static Context getAllMyTicketsOfStatus(Context ctx) {
 				int userId = Integer.parseInt(ctx.sessionAttribute("empId"));
 				TicketStatus status = TicketStatus.valueOf(ctx.formParam("selectedStatus"));
 					switch (status) {
@@ -49,14 +47,14 @@ public class EmployeeTicketController {
 						case REJECTED:
 							return ctx.json(EmployeeService.getMyRejectedTickets(userId));
 						default:
-							return ctx;//what Context obj should this be?
+							return ctx;
 					}
 			}
 			
 			
 
 			
-			public Context getAllMyPendingTickets(Context ctx) {
+			public static Context getAllMyPendingTickets(Context ctx) {
 				int userId = Integer.parseInt(ctx.sessionAttribute("empId"));
 				List<Ticket> userPendingTickets = new ArrayList<Ticket>();
 				userPendingTickets = EmployeeService.getMyPendingTickets(userId);
@@ -66,7 +64,7 @@ public class EmployeeTicketController {
 			
 			
 			
-			public Context getAllMyApprovedTickets(Context ctx) {
+			public static Context getAllMyApprovedTickets(Context ctx) {
 				int userId = Integer.parseInt(ctx.sessionAttribute("empId"));
 				List<Ticket> userApprovedTickets = new ArrayList<Ticket>();
 				userApprovedTickets = EmployeeService.getMyApprovedTickets(userId);
@@ -75,7 +73,7 @@ public class EmployeeTicketController {
 
 			
 			
-			public Context getAllMyRejectedTickets(Context ctx) {
+			public static Context getAllMyRejectedTickets(Context ctx) {
 				int userId = Integer.parseInt(ctx.sessionAttribute("empId"));
 				List<Ticket> userRejectedTickets = new ArrayList<Ticket>();
 				userRejectedTickets = EmployeeService.getMyRejectedTickets(userId);
@@ -84,10 +82,10 @@ public class EmployeeTicketController {
 			
 			
 			
-			public Context getAllMyTicketHistory(Context ctx) {
+			public static Context getAllMyTicketHistory(Context ctx) {
 				int userId = Integer.parseInt(ctx.sessionAttribute("empId"));
 				List<TicketStatusEvent> userAllTicketHistory = new ArrayList<TicketStatusEvent>();
-				userAllTicketHistory = EmployeeService.getAllMyTicketsAndHist(userId);
+				userAllTicketHistory = EmployeeService.getAllMyTicketHistory(userId);
 				return ctx.json(userAllTicketHistory);
 				
 			}
@@ -95,32 +93,25 @@ public class EmployeeTicketController {
 
 			
 			
-			public Context getMyTicketAndHist(Context ctx) {
+			public static Context getMyTicketAndHist(Context ctx) {
 				int id = Integer.parseInt(ctx.formParam("ticketId"));
 				Ticket t = EmployeeService.getMyTicketAndHist(id);
 				return ctx.json(t);
-				//how to finish?
 			}
 			
 			
 
 
 			//return types?
-			public static String submitMyTicket(Context ctx) {
+			public static Context submitMyTicket(Context ctx) {
 				Ticket t = new Ticket();
 					t.setAmount(Double.parseDouble(ctx.formParam("amount")));
 					t.setDescription(ctx.formParam("description"));
 					t.setStatus(TicketStatus.PENDING);
 					t.setType(RequestType.valueOf(ctx.formParam("type")));
 					t.setEmployeeId(Integer.parseInt(ctx.sessionAttribute("empId")));
-				
-					if(EmployeeService.submitTicketFromForm(t)) {
-						return "/confirmTicketSubmission.html";
-					} else {
-						ctx.status(401);
-						return "/somethingWentWrong.html";
-						}
-					}
+				return ctx.json(EmployeeService.submitTicketFromForm(t));
+			}
 
 
 			

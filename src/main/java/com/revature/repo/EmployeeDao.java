@@ -28,12 +28,8 @@ public interface EmployeeDao {
 
 
 	static boolean insertNewTicket(Ticket t) {
-		return (true || false);
-	}
-
-
-	static boolean selectAllUserTickets() {
-		return (true || false);
+		//dao logic
+		return true;
 	}
 
 
@@ -44,8 +40,8 @@ public interface EmployeeDao {
 	}
 
 
-	static List<TicketStatusEvent> selectAllTicketsForUser(int userId) {
-		List<TicketStatusEvent> usersAllTicketsList = new ArrayList<TicketStatusEvent>();
+	static List<Ticket> selectAllTicketsForUser(int userId) {
+		List<Ticket> usersAllTicketsList = new ArrayList<Ticket>();
 		//dao logic
 		return usersAllTicketsList;
 	}
@@ -76,6 +72,20 @@ public interface EmployeeDao {
 		Employee e = new Employee();
 		//dao logic
 		return e;
+	}
+
+
+	static List<TicketStatusEvent> selectAllTicketHistoryForUser(int userId) {
+		List<TicketStatusEvent> userTicketHistory = new ArrayList<TicketStatusEvent>();
+		//dao logic
+		return userTicketHistory;
+	}
+
+
+	static List<Employee> selectAllEmployees() {
+		List<Employee> employeeList = new ArrayList<Employee>();
+		//dao logic
+		return employeeList;
 	}
 	
 }
