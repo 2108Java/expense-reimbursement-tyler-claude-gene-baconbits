@@ -10,11 +10,13 @@ public interface EmployeeDao {
 	
 	// Selects an Employee by User Name and by ID
 	
-	public Employee selectByUsername(String username);
+	public Employee selectByUserName(String username);
 	
-	public boolean selectUsernameAndPass(String username, String password);
+	public boolean selectUserNameAndPass(String username, String password);
 	
 	public Employee selectEmployeeById(int id);
+	
+	public boolean selectCheckUserName(String username);
 	
 	// Update an Employee because reasons
 	

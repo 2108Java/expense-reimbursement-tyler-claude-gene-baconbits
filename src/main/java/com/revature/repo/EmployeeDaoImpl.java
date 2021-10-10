@@ -8,7 +8,7 @@ import java.sql.SQLException;
 import com.revature.models.Employee;
 import com.revature.utilities.ConnectionDispatch;
 
-public class EmployeeDaoImp implements EmployeeDao {
+public class EmployeeDaoImpl implements EmployeeDao {
 
 	ConnectionDispatch dispatch = new ConnectionDispatch();
 	Connection conn;
@@ -48,7 +48,7 @@ public class EmployeeDaoImp implements EmployeeDao {
 	}
 
 	@Override
-	public Employee selectByUsername(String username) {
+	public Employee selectByUserName(String username) {
 		PreparedStatement ps;
 		Employee emp = new Employee();
 		
@@ -83,23 +83,6 @@ public class EmployeeDaoImp implements EmployeeDao {
 		
 		
 		return emp;
-//		try {
-//			
-//			dispatch.GetConnection();
-//			ps = conn.prepareStatement(sql);
-//			
-//			ResultSet rs = ps.executeQuery();
-//			
-//			while(rs.next()) {
-//				// to be implemented.
-//			}
-//			
-//			
-//		} catch (SQLException e) {
-//			e.printStackTrace();
-//		}
-//		
-//
 	}
 
 	@Override
@@ -151,7 +134,7 @@ public class EmployeeDaoImp implements EmployeeDao {
 	}
 
 	@Override
-	public boolean selectUsernameAndPass(String username, String password) {
+	public boolean selectUserNameAndPass(String username, String password) {
 		boolean goodOps = false;
 		
 		String sql = "SELECT * FROM employee_table WHERE username = ? AND password = ?";
@@ -172,6 +155,29 @@ public class EmployeeDaoImp implements EmployeeDao {
 		}
 		
 		
+		return goodOps;
+	}
+
+	@Override
+	public boolean selectCheckUserName(String username) {
+		boolean goodOps = false;
+		
+		String sql = "SELECT username FROM employee_table WHERE username = ?";
+		
+		try {
+			dispatch.getConnection();
+			
+			PreparedStatement ps = conn.prepareStatement(sql);
+			
+			ps.setString(1, username);
+			
+			goodOps = ps.execute();
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
 		return goodOps;
 	}
 

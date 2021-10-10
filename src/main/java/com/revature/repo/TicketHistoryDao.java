@@ -4,7 +4,7 @@ public interface TicketHistoryDao {
 	
 	// Creates a new timestamp
 	
-	public boolean insertTimeStamp();
+	public boolean insertTimeStamp(int ticketId);
 	
 	// Selects a timestamp
 	
