@@ -10,47 +10,47 @@ public interface ManagerService {
 
 
 
-	static List<Ticket> getAllPendingTickets() {
+	public static List<Ticket> getAllPendingTickets() {
 		return TicketDao.selectAllPendingTickets();
 	}
 
-	static List<Ticket>  getAllApprovedTickets() {
+	public static List<Ticket>  getAllApprovedTickets() {
 		return TicketDao.selectAllApprovedTickets();
 	}
 
-	static List<Ticket> getAllRejectedTickets() {
+	public static List<Ticket> getAllRejectedTickets() {
 		return TicketDao.selectAllRejectedTickets();
 	}
 
-	static List<Ticket> getAllTickets() {
+	public static List<Ticket> getAllTickets() {
 		return TicketDao.selectAllApprovedTickets();
 	}
 
-	static List<TicketStatusEvent> getAllTicketStatusEvents() {
+	public static List<TicketStatusEvent> getAllTicketStatusEvents() {
 		return TicketDao.selectAllTicketStatusEvents();
 	}
 
-	static List<Ticket> getAllTicketsByEmployeeName(String empName) {
+	public static List<Ticket> getAllTicketsByEmployeeName(String empName) {
 		return TicketDao.selectTicketsByEmployeeName(empName);
 	}
 
-	static Ticket approveTicket(int id) {
+	public static Ticket approveTicket(int id) {
 		return TicketDao.updateStatusToApproved(id);			
 	}
 
-	static Ticket rejectTicket(int id) {
+	public static Ticket rejectTicket(int id) {
 		return TicketDao.updateStatusToRejected(id);			
 	}
 
-	static Ticket changeStatusToPending(int id) {
+	public static Ticket changeStatusToPending(int id) {
 		return TicketDao.updateStatusToPending(id);		
 	}
 
-	static List<Ticket> approveAllPendingTickets() {
+	public static List<Ticket> approveAllPendingTickets() {
 		return TicketDao.updateAllPendingToApproved();
 	}
 
-	static List<Employee> getListOfEmployees() {
+	public static List<Employee> getListOfEmployees() {
 		return EmployeeDao.selectAllEmployees();
 	}
 

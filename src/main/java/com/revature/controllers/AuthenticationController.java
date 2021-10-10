@@ -36,7 +36,7 @@ public class AuthenticationController {
 		
 		if(authenticated) {
 			//if authenticated, send to home page and give session credential
-			Employee emp = UserService.getUserByUsername(username);
+			Employee emp = EmployeeService.getUserByUsername(username);
 			ctx.sessionAttribute("user", emp);
 			ctx.sessionAttribute("empId", emp.getEmpId());
 			if(emp.getIsManager()) {

@@ -27,9 +27,11 @@ public interface EmployeeDao {
 	}
 
 
-	static boolean insertNewTicket(Ticket t) {
+	static Ticket insertNewTicket(Ticket t) {
+		Ticket t = new Ticket();
 		//dao logic
-		return true;
+		//add the ticket and then send back a Ticket object
+		return t;
 	}
 
 

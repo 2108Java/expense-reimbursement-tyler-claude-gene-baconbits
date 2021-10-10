@@ -102,7 +102,6 @@ public class EmployeeTicketController {
 			
 
 
-			//return types?
 			public static Context submitMyTicket(Context ctx) {
 				Ticket t = new Ticket();
 					t.setAmount(Double.parseDouble(ctx.formParam("amount")));

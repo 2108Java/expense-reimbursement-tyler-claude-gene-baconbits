@@ -9,35 +9,35 @@ import com.revature.repo.EmployeeDao;
 
 public interface EmployeeService {
 
-	static Employee getUserByUsername(String username) {
+	public static Employee getUserByUsername(String username) {
 		return EmployeeDao.selectUserByUsername(username);
 	}
 
-	static boolean submitTicketFromForm(Ticket t) {
+	public static Ticket submitTicketFromForm(Ticket t) {
 		return EmployeeDao.insertNewTicket(t);
 	}
 
-	static Ticket getMyTicketAndHist(int id) {
+	public static Ticket getMyTicketAndHist(int id) {
 		return EmployeeDao.selectUserTicket(id);
 	}
 
-	static List<TicketStatusEvent> getAllMyTicketHistory(int userId) {
+	public static List<TicketStatusEvent> getAllMyTicketHistory(int userId) {
 		return EmployeeDao.selectAllTicketHistoryForUser(userId);
 	}
 
-	static List<Ticket> getMyRejectedTickets(int userId) {
+	public static List<Ticket> getMyRejectedTickets(int userId) {
 		return EmployeeDao.selectRejectedTicketsForUser(userId);
 	}
 
-	static List<Ticket> getMyApprovedTickets(int userId) {
+	public static List<Ticket> getMyApprovedTickets(int userId) {
 		return EmployeeDao.selectApprovedTicketsForUser(userId);
 	}
 
-	static List<Ticket> getMyPendingTickets(int userId) {
+	public static List<Ticket> getMyPendingTickets(int userId) {
 		return EmployeeDao.selectPendingTicketsForUser(userId);
 	}
 
-	static List<Ticket> getAllTicketsForUser(int userId) {
+	public static List<Ticket> getAllTicketsForUser(int userId) {
 		return EmployeeDao.selectAllTicketsForUser(userId);
 	}
 
