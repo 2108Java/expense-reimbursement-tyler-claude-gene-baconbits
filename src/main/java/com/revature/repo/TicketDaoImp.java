@@ -5,7 +5,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import com.revature.models.Employee;
@@ -143,20 +142,23 @@ public class TicketDaoImp implements TicketDao {
 			
 			// need to figure out how to make a date into an
 			while (rs.next()) {
-				tickets.add(
-						new Ticket(
-						(rs.getInt("account_id")),
-						(rs.getInt("employee_id")),
-						(rs.getDouble("amount")),
-						(rs.getString("type")),
-						(rs.getString("description")),
-						(rs.getString("status")),
-						(rs.getDate("date"))
-								
-								));
+				
+						while (rs.next()) {
+						    Ticket t = new Ticket();
+						    t.setId(rs.getInt("ticket_id"));
+						    emp.setEmpId(rs.getInt("employee_id"));
+						    t.setDescription(rs.getString("description"));
+						    t.setStatusString(rs.getString("status"));
+						    t.setTypeString(rs.getString("type"));
+						    
+						    
+						    
+						    tickets.add(t); //it's something like that
+						
+						}
 				
 			}
-			
+		
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -170,7 +172,7 @@ public class TicketDaoImp implements TicketDao {
 	@Override
 	public List<Ticket> selectEmployeeTickets(int employee_id) {
 		
-		List<Ticket> selectedTickets = new ArrayList<>();
+		List<Ticket> tickets = new ArrayList<>();
 		PreparedStatement ps;
 		
 		String sql =  "SELECT * FROM ticket_table WHERE employee_id = ?";
@@ -185,17 +187,17 @@ public class TicketDaoImp implements TicketDao {
 			
 			// need to figure out how to make a date into an
 			while (rs.next()) {
-				selectedTickets.add(
-						new Ticket(
-						(rs.getInt("account_id")),
-						(rs.getInt("employee_id")),
-						(rs.getDouble("amount")),
-						(rs.getString("type")),
-						(rs.getString("description")),
-						(rs.getString("status")),
-						(rs.getDate("date"))
-								
-								));
+				
+						    Ticket t = new Ticket();
+						    t.setId(rs.getInt("ticket_id"));
+						    emp.setEmpId(rs.getInt("employee_id"));
+						    t.setDescription(rs.getString("description"));
+						    t.setStatusString(rs.getString("status"));
+						    t.setTypeString(rs.getString("type"));
+						    
+						    
+						    
+						    tickets.add(t); //it's something like that
 				
 			}		
 		} catch (SQLException e) {
@@ -203,7 +205,7 @@ public class TicketDaoImp implements TicketDao {
 			e.printStackTrace();
 		}
 		
-		return selectedTickets;
+		return tickets;
 	}
 
 	
@@ -225,17 +227,16 @@ ResultSet rs = ps.executeQuery();
 			
 			// need to figure out how to make a date into an
 			while (rs.next()) {
-				selectedTickets.add(
-						new Ticket(
-						(rs.getInt("account_id")),
-						(rs.getInt("employee_id")),
-						(rs.getDouble("amount")),
-						(rs.getString("type")),
-						(rs.getString("description")),
-						(rs.getString("status")),
-						(rs.getDate("date"))
-								
-								));
+				    Ticket t = new Ticket();
+				    t.setId(rs.getInt("ticket_id"));
+				    emp.setEmpId(rs.getInt("employee_id"));
+				    t.setDescription(rs.getString("description"));
+				    t.setStatusString(rs.getString("status"));
+				    t.setTypeString(rs.getString("type"));
+				    
+				    
+				    
+				    selectedTickets.add(t); //it's something like that
 				
 			}
 			
@@ -264,17 +265,16 @@ ResultSet rs = ps.executeQuery();
 			
 			// need to figure out how to make a date into an
 			while (rs.next()) {
-				tickets.add(
-						new Ticket(
-						(rs.getInt("account_id")),
-						(rs.getInt("employee_id")),
-						(rs.getDouble("amount")),
-						(rs.getString("type")),
-						(rs.getString("description")),
-						(rs.getString("status")),
-						(rs.getDate("date"))
-								
-								));
+				    Ticket t = new Ticket();
+				    t.setId(rs.getInt("ticket_id"));
+				    emp.setEmpId(rs.getInt("employee_id"));
+				    t.setDescription(rs.getString("description"));
+				    t.setStatusString(rs.getString("status"));
+				    t.setTypeString(rs.getString("type"));
+				    
+				    
+				    
+				    tickets.add(t); //it's something like that
 				
 			}
 		
