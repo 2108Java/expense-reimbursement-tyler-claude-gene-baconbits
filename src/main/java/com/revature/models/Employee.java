@@ -158,12 +158,6 @@ public class Employee {
 			return false;
 		Employee other = (Employee) obj;
 		return Objects.equals(password, other.password);
+	
 	}
-	
-	
-
-	
-	
-	
-	
 }
