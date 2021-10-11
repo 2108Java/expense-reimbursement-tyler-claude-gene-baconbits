@@ -5,12 +5,14 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import com.revature.models.Employee;
 import com.revature.models.RequestType;
 import com.revature.models.Ticket;
 import com.revature.models.TicketStatus;
+import com.revature.models.TicketStatusEvent;
 import com.revature.utilities.ConnectionDispatch;
 
 public class TicketDaoImp implements TicketDao {
@@ -128,6 +130,7 @@ public class TicketDaoImp implements TicketDao {
 	public List<Ticket> selectYourTicketsByStatus(int employee_id, TicketStatus status) {
 		PreparedStatement ps;
 		List<Ticket> tickets = new ArrayList<>();
+		List<TicketStatusEvent> events = new ArrayList<>();
 		
 		String sql = "SELECT * FROM ticket_table WHERE employee_id = ? AND status = ?";
 		
@@ -148,7 +151,7 @@ public class TicketDaoImp implements TicketDao {
 						(rs.getString("type")),
 						(rs.getString("description")),
 						(rs.getString("status")),
-						(rs.getDate("ticket_history"))
+						(rs.getDate("date"))
 								
 								));
 				
@@ -177,8 +180,24 @@ public class TicketDaoImp implements TicketDao {
 			ps = conn.prepareStatement(sql);
 			ps.setInt(1, employee_id);
 			
+
+			ResultSet rs = ps.executeQuery();
 			
-		
+			// need to figure out how to make a date into an
+			while (rs.next()) {
+				selectedTickets.add(
+						new Ticket(
+						(rs.getInt("account_id")),
+						(rs.getInt("employee_id")),
+						(rs.getDouble("amount")),
+						(rs.getString("type")),
+						(rs.getString("description")),
+						(rs.getString("status")),
+						(rs.getDate("date"))
+								
+								));
+				
+			}		
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -202,7 +221,23 @@ public class TicketDaoImp implements TicketDao {
 			ps.setInt(1, employee_id);
 			ps.setString(2, status.name());
 			
+ResultSet rs = ps.executeQuery();
 			
+			// need to figure out how to make a date into an
+			while (rs.next()) {
+				selectedTickets.add(
+						new Ticket(
+						(rs.getInt("account_id")),
+						(rs.getInt("employee_id")),
+						(rs.getDouble("amount")),
+						(rs.getString("type")),
+						(rs.getString("description")),
+						(rs.getString("status")),
+						(rs.getDate("date"))
+								
+								));
+				
+			}
 			
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -225,7 +260,23 @@ public class TicketDaoImp implements TicketDao {
 		try {
 			ps = conn.prepareStatement(sql);
 
+			ResultSet rs = ps.executeQuery();
 			
+			// need to figure out how to make a date into an
+			while (rs.next()) {
+				tickets.add(
+						new Ticket(
+						(rs.getInt("account_id")),
+						(rs.getInt("employee_id")),
+						(rs.getDouble("amount")),
+						(rs.getString("type")),
+						(rs.getString("description")),
+						(rs.getString("status")),
+						(rs.getDate("date"))
+								
+								));
+				
+			}
 		
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -236,6 +287,8 @@ public class TicketDaoImp implements TicketDao {
 		return tickets;
 	}
 
+	
+	
 	// Generic update
 	@Override
 	public boolean updateTicket(int id) {
@@ -267,8 +320,8 @@ public class TicketDaoImp implements TicketDao {
 			
 		PreparedStatement ps = conn.prepareStatement(sql);
 		
-		ps.setInt(1, id);
-		ps.setString(2, status.toString());
+		ps.setString(1, status.name());
+		ps.setInt(2, id);
 		
 		success = ps.execute();
 		
@@ -301,6 +354,7 @@ public class TicketDaoImp implements TicketDao {
 		
 		return success;
 	}
+	
 	
 	
 }
