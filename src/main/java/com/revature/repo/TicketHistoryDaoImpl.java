@@ -32,7 +32,8 @@ public class TicketHistoryDaoImpl implements TicketHistoryDao {
 		Calendar time = Calendar.getInstance(tzone);
 		
 		
-		String sql = "INSERT INTO table_history_dao(ticket_id, ticket_status, date) VALUES (?, ?, ?)";
+		String sql = "INSERT INTO ticket_history(ticket_id, ticket_status, date) VALUES (?, ?, CURRENT_DATE)";
+		// Gets today's date in SQL. Unfortunately with no Time.
 		
 		try {
 			
@@ -42,7 +43,7 @@ public class TicketHistoryDaoImpl implements TicketHistoryDao {
 			
 			ps.setInt(1, ticketId);
 			ps.setString(2, status);
-			ps.setDate(3, (Date) time.getTime());
+			
 			
 			goodOps = ps.execute();
 			

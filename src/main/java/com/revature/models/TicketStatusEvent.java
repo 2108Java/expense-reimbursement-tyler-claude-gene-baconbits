@@ -1,5 +1,6 @@
 package com.revature.models;
 
+import java.sql.Date;
 import java.util.Calendar;
 
 public class TicketStatusEvent {
@@ -8,6 +9,7 @@ public class TicketStatusEvent {
 	private Integer tickId;
 	private TicketStatus newStatus;
 	private Calendar date;
+	private Date callDate;
 	
 	
 		//CONSTRUCTORS
@@ -65,6 +67,12 @@ public class TicketStatusEvent {
 		public void setNewStatusString(String newStatus) {
 		        this.newStatus = TicketStatus.valueOf(newStatus);
 		    }
+
+
+		public void setDate(Date callDate) {
+			this.callDate = callDate;
+			
+		}
 	
 
 

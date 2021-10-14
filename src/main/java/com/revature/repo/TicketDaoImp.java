@@ -25,7 +25,7 @@ public class TicketDaoImp implements TicketDao {
 	public boolean createTicket(int employee_id, double amount, RequestType type, String description, TicketStatus status) {
 		boolean success = false;
 		
-		String sql = "INSERT INTO ticket_table(employee_id, amount, type, description, status), VALUES (?, ?, ?, ?)";
+		String sql = "INSERT INTO ticket_table(employee_id, amount, type, description), VALUES (?, ?, ?, ?)";
 		
 		try {
 			dispatch.getConnection();
@@ -36,7 +36,7 @@ public class TicketDaoImp implements TicketDao {
 			ps.setDouble(2, amount);
 			ps.setString(3, type.name());
 			ps.setString(4, description);
-			ps.setString(5, status.name());
+			
 			
 			
 			success = ps.execute();
@@ -59,9 +59,10 @@ public class TicketDaoImp implements TicketDao {
 	@Override
 	public Ticket selectTicket(int id) {
 		Ticket selectedTicket = new Ticket();
+		TicketStatusEvent status = new TicketStatusEvent();
 		PreparedStatement ps;
 		
-		String sql = "SELECT * FROM ticket_table ti RIGHT JOIN ticket_history_table WHERE ticket_id = ?";
+		String sql = "SELECT * FROM ticket_table tt RIGHT JOIN ticket_history th ON tt.employee_id = ? AND tt.ticket_id = th.ticket_id";
 		
 		try {
 			dispatch.getConnection();
@@ -77,10 +78,10 @@ public class TicketDaoImp implements TicketDao {
 				selectedTicket.setId(result.getInt("ticket_id"));
 				selectedTicket.setEmployeeId(result.getInt("employee_id"));
 				selectedTicket.setAmount(result.getDouble("amount"));
-				selectedTicket.setTypeString(result.getString("type"));
+				selectedTicket.setTypeString(result.getString("request"));
 				selectedTicket.setDescription(result.getString("description"));
-				selectedTicket.setStatusString(result.getString("status"));
-				
+				status.setNewStatusString(result.getString("t_status"));
+				status.setDate(result.getDate("issue_date"));
 				
 			}
 			
@@ -101,7 +102,7 @@ public class TicketDaoImp implements TicketDao {
 
 		List<Ticket> selectedTickets = new ArrayList<>();
 		PreparedStatement ps;
-		String sql = "SELECT * from ticket_table RIGHT JOIN ticket_history_table th ON ti.employee_id = ? AND ti.ticket_id = th.ticket_id ";
+		String sql = "SELECT * FROM ticket_table RIGHT JOIN ticket_history_table th ON ti.employee_id = ? AND ti.ticket_id = th.ticket_id ";
 		
 		try {
 			ps = conn.prepareStatement(sql);
@@ -131,7 +132,7 @@ public class TicketDaoImp implements TicketDao {
 		List<Ticket> tickets = new ArrayList<>();
 		List<TicketStatusEvent> events = new ArrayList<>();
 		
-		String sql = "SELECT * FROM ticket_table WHERE employee_id = ? AND status = ?";
+		String sql = "SELECT * FROM ticket_table tt, ticket_history th WHERE tt.employee_id = ? AND th.t_status = ?";
 		
 		try {
 			ps = conn.prepareStatement(sql);
@@ -145,16 +146,17 @@ public class TicketDaoImp implements TicketDao {
 				
 						while (rs.next()) {
 						    Ticket t = new Ticket();
+						    TicketStatusEvent e = new TicketStatusEvent();
 						    t.setId(rs.getInt("ticket_id"));
 						    emp.setEmpId(rs.getInt("employee_id"));
 						    t.setDescription(rs.getString("description"));
-						    t.setStatusString(rs.getString("status"));
-						    t.setTypeString(rs.getString("type"));
-						    
+						    t.setTypeString(rs.getString("request"));
+						    e.setNewStatusString(rs.getString("t_status"));
+						    e.setDate(rs.getDate("issue_date"));
 						    
 						    
 						    tickets.add(t); //it's something like that
-						
+						    events.add(e);
 						}
 				
 			}
@@ -173,6 +175,8 @@ public class TicketDaoImp implements TicketDao {
 	public List<Ticket> selectEmployeeTickets(int employee_id) {
 		
 		List<Ticket> tickets = new ArrayList<>();
+		List<TicketStatusEvent> events = new ArrayList<>();
+		
 		PreparedStatement ps;
 		
 		String sql =  "SELECT * FROM ticket_table WHERE employee_id = ?";
@@ -189,16 +193,17 @@ public class TicketDaoImp implements TicketDao {
 			while (rs.next()) {
 				
 						    Ticket t = new Ticket();
+						    TicketStatusEvent e = new TicketStatusEvent();
 						    t.setId(rs.getInt("ticket_id"));
 						    emp.setEmpId(rs.getInt("employee_id"));
 						    t.setDescription(rs.getString("description"));
-						    t.setStatusString(rs.getString("status"));
-						    t.setTypeString(rs.getString("type"));
-						    
+						    t.setTypeString(rs.getString("request"));
+						    e.setNewStatusString(rs.getString("t_status"));
+						    e.setDate(rs.getDate("issue_date"));
 						    
 						    
 						    tickets.add(t); //it's something like that
-				
+						    events.add(e);
 			}		
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -214,7 +219,7 @@ public class TicketDaoImp implements TicketDao {
 		
 		PreparedStatement ps;
 		List<Ticket> selectedTickets = new ArrayList<>();
-
+		List<TicketStatusEvent> events = new ArrayList<>();
 		String sql = "SELECT * FROM ticket_table WHERE employee_id = ? AND status = ?";
 		
 		try {
@@ -227,17 +232,20 @@ ResultSet rs = ps.executeQuery();
 			
 			// need to figure out how to make a date into an
 			while (rs.next()) {
-				    Ticket t = new Ticket();
-				    t.setId(rs.getInt("ticket_id"));
-				    emp.setEmpId(rs.getInt("employee_id"));
-				    t.setDescription(rs.getString("description"));
-				    t.setStatusString(rs.getString("status"));
-				    t.setTypeString(rs.getString("type"));
+				Ticket t = new Ticket();
+			    TicketStatusEvent e = new TicketStatusEvent();
+			    
+			    t.setId(rs.getInt("ticket_id"));
+			    emp.setEmpId(rs.getInt("employee_id"));
+			    t.setDescription(rs.getString("description"));
+			    t.setTypeString(rs.getString("type"));
+			    e.setNewStatusString(rs.getString("t_status"));
+			    e.setDate(rs.getDate("issue_date"));
 				    
 				    
 				    
 				    selectedTickets.add(t); //it's something like that
-				
+				    events.add(e);
 			}
 			
 		} catch (SQLException e) {
@@ -265,12 +273,16 @@ ResultSet rs = ps.executeQuery();
 			
 			// need to figure out how to make a date into an
 			while (rs.next()) {
-				    Ticket t = new Ticket();
-				    t.setId(rs.getInt("ticket_id"));
-				    emp.setEmpId(rs.getInt("employee_id"));
-				    t.setDescription(rs.getString("description"));
-				    t.setStatusString(rs.getString("status"));
-				    t.setTypeString(rs.getString("type"));
+				Ticket t = new Ticket();
+			    TicketStatusEvent e = new TicketStatusEvent();
+			    
+			    t.setId(rs.getInt("ticket_id"));
+			    emp.setEmpId(rs.getInt("employee_id"));
+			    t.setDescription(rs.getString("description"));
+			    t.setStatusString(rs.getString("status"));
+			    t.setTypeString(rs.getString("request"));
+			    e.setNewStatusString(rs.getString("t_status"));
+			    e.setDate(rs.getDate("issue_date"));
 				    
 				    
 				    
@@ -314,7 +326,7 @@ ResultSet rs = ps.executeQuery();
 	public boolean updateTicketStatus(int id, TicketStatus status) {
 		boolean success = false;
 		
-		String sql = "UPDATE ticket_table SET status = ? WHERE employee_id = ?";
+		String sql = "UPDATE ticket_history SET status = ? WHERE employee_id = ?";
 		
 		try {
 			
@@ -337,7 +349,7 @@ ResultSet rs = ps.executeQuery();
 		
 		boolean success = false;
 		
-		String sql = "DELETE IN ticket_table WHERE id = ?";
+		String sql = "DELETE IN ticket_table, ticket history WHERE ticket_id = ?";
 		
 		try {
 			

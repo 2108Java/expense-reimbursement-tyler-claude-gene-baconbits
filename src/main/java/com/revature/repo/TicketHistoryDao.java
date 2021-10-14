@@ -1,5 +1,7 @@
 package com.revature.repo;
 
+import com.revature.models.TicketStatusEvent;
+
 public interface TicketHistoryDao {
 	
 	// Creates a new timestamp
