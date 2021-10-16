@@ -14,7 +14,7 @@ import com.revature.models.TicketStatus;
 import com.revature.models.TicketStatusEvent;
 import com.revature.utilities.ConnectionDispatch;
 
-public class TicketDaoImp implements TicketDao {
+public class TicketDaoImpl implements TicketDao {
 
 	ConnectionDispatch dispatch = new ConnectionDispatch();
 	TicketHistoryDao historyDao = new TicketHistoryDaoImpl();
@@ -41,9 +41,7 @@ public class TicketDaoImp implements TicketDao {
 			
 			success = ps.execute();
 			
-			if (success) {
-				historyDao.insertTimeStamp(emp.getEmpId());
-			}
+			
 			
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -62,7 +60,7 @@ public class TicketDaoImp implements TicketDao {
 		TicketStatusEvent status = new TicketStatusEvent();
 		PreparedStatement ps;
 		
-		String sql = "SELECT * FROM ticket_table tt RIGHT JOIN ticket_history th ON tt.employee_id = ? AND tt.ticket_id = th.ticket_id";
+		String sql = "SELECT * FROM ticket_table tt INNER JOIN ticket_history th ON tt.employee_id = ? AND tt.ticket_id = th.ticket_id";
 		
 		try {
 			dispatch.getConnection();
@@ -102,7 +100,7 @@ public class TicketDaoImp implements TicketDao {
 
 		List<Ticket> selectedTickets = new ArrayList<>();
 		PreparedStatement ps;
-		String sql = "SELECT * FROM ticket_table RIGHT JOIN ticket_history_table th ON ti.employee_id = ? AND ti.ticket_id = th.ticket_id ";
+		String sql = "SELECT * FROM ticket_table INNER JOIN ticket_history_table th ON ti.employee_id = ? AND ti.ticket_id = th.ticket_id ";
 		
 		try {
 			ps = conn.prepareStatement(sql);
@@ -326,7 +324,7 @@ ResultSet rs = ps.executeQuery();
 	public boolean updateTicketStatus(int id, TicketStatus status) {
 		boolean success = false;
 		
-		String sql = "UPDATE ticket_history SET status = ? WHERE employee_id = ?";
+		String sql = "UPDATE ticket_history SET status = ? WHERE ticket_id = ?";
 		
 		try {
 			

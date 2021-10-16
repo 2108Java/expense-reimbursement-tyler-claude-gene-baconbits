@@ -11,11 +11,12 @@ import com.revature.models.Employee;
 import com.revature.models.Ticket;
 import com.revature.models.TicketStatus;
 import com.revature.utilities.ConnectionDispatch;
+import com.revature.repo.TicketDaoImpl;
 
 public class TicketHistoryDaoImpl implements TicketHistoryDao {
 
 	ConnectionDispatch dispatch = new ConnectionDispatch();
-	TicketDao tDao = new TicketDaoImp();
+	TicketDao tDao = new TicketDaoImpl();
 	
 	Connection conn;
 	Employee emp;
@@ -23,7 +24,7 @@ public class TicketHistoryDaoImpl implements TicketHistoryDao {
 	
 	
 	@Override
-	public boolean insertTimeStamp(int ticketId) {
+	public boolean insertTicketStatus(int ticketId) {
 		boolean goodOps = false;
 		
 		String status = TicketStatus.PENDING.name();
@@ -46,6 +47,7 @@ public class TicketHistoryDaoImpl implements TicketHistoryDao {
 			
 			
 			goodOps = ps.execute();
+			tDao.selectAllTickets();
 			
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -56,34 +58,89 @@ public class TicketHistoryDaoImpl implements TicketHistoryDao {
 		return goodOps;
 	}
 
-	@Override
-	 public void selectATimeStamp() {
-		// TODO Auto-generated method stub
-
-	}
 
 	@Override
-	public void selectYourOwnTimeStamp() {
-		// TODO Auto-generated method stub
-
+	public boolean updateStatusToRejected(int ticketId) {
+		boolean goodOps = false;
+		
+		String sql = "UPDATE ticket_hisory SET t_status = ? AND date = CURRENT_DATE WHERE ticket_id = ?";
+		
+		try {
+			
+			dispatch.getConnection();
+			
+			PreparedStatement ps = conn.prepareStatement(sql);
+			
+			ps.setString(1, TicketStatus.REJECTED.name());
+			ps.setInt(2, ticketId);
+			
+			goodOps = ps.execute();
+			tDao.selectAllTickets();
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return goodOps;
 	}
+
 
 	@Override
-	public void selectEmployeeTimeStamp() {
-		// TODO Auto-generated method stub
-
+	public boolean updateStatusToApproved(int ticketId) {
+		boolean goodOps = false;
+		
+		String sql = "UPDATE ticket_hisory SET t_status = ? AND date = CURRENT_DATE WHERE ticket_id = ?";
+		
+try {
+			
+			dispatch.getConnection();
+			
+			PreparedStatement ps = conn.prepareStatement(sql);
+			
+			ps.setString(1, TicketStatus.APPROVED.name());
+			ps.setInt(2, ticketId);
+			
+			goodOps = ps.execute();
+			tDao.selectAllTickets();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
+		return goodOps;
 	}
+
 
 	@Override
-	public void selectAllTimeStamps() {
-		// TODO Auto-generated method stub
-
+	public boolean updateStatusToPending(int ticketId) {
+		boolean goodOps = false;
+		
+		String sql = "UPDATE ticket_hisory SET t_status = ? AND date = CURRENT_DATE WHERE ticket_id = ?";
+		
+try {
+			
+			dispatch.getConnection();
+			
+			PreparedStatement ps = conn.prepareStatement(sql);
+			
+			ps.setString(1, TicketStatus.PENDING.name());
+			ps.setInt(2, ticketId);
+			
+			goodOps = ps.execute();
+			tDao.selectAllTickets();
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return goodOps;
 	}
 
-	@Override
-	public boolean deleteTimeStamp() {
-		// TODO Auto-generated method stub
-		return false;
-	}
+	
+
+	
 
 }
