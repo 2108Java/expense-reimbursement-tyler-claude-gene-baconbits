@@ -358,11 +358,132 @@ ResultSet rs = ps.executeQuery();
 			success = ps.execute();
 			
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
+			
 			e.printStackTrace();
 		}
 		
 		return success;
+	}
+
+	@Override
+	public List<Ticket> selectAllPendingTickets() {
+		List<Ticket> tickets = new ArrayList<>();
+		PreparedStatement ps;
+		
+		String sql = "SELECT * FROM ticket_table tt, ticket_history th WHERE th.t_status = 'PENDING' AND tt.ticket_id = th.ticket_id";
+		
+		try {
+			ps = conn.prepareStatement(sql);
+
+			ResultSet rs = ps.executeQuery();
+			
+			// need to figure out how to make a date into an
+			while (rs.next()) {
+				Ticket t = new Ticket();
+			    TicketStatusEvent e = new TicketStatusEvent();
+			    
+			    t.setId(rs.getInt("ticket_id"));
+			    emp.setEmpId(rs.getInt("employee_id"));
+			    t.setDescription(rs.getString("description"));
+			    t.setStatusString(rs.getString("status"));
+			    t.setTypeString(rs.getString("request"));
+			    e.setNewStatusString(rs.getString("t_status"));
+			    e.setDate(rs.getDate("issue_date"));
+				    
+				    
+				    
+				    tickets.add(t); //it's something like that
+				
+			}
+		
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
+		return tickets;
+	
+	}
+
+	@Override
+	public List<Ticket> selectAllApproedTickets() {
+		List<Ticket> tickets = new ArrayList<>();
+		PreparedStatement ps;
+		
+		String sql = "SELECT * FROM ticket_table tt, ticket_history th WHERE th.t_status = 'APPROVED' AND tt.ticket_id = th.ticket_id";
+		
+		try {
+			ps = conn.prepareStatement(sql);
+
+			ResultSet rs = ps.executeQuery();
+			
+			// need to figure out how to make a date into an
+			while (rs.next()) {
+				Ticket t = new Ticket();
+			    TicketStatusEvent e = new TicketStatusEvent();
+			    
+			    t.setId(rs.getInt("ticket_id"));
+			    emp.setEmpId(rs.getInt("employee_id"));
+			    t.setDescription(rs.getString("description"));
+			    t.setStatusString(rs.getString("status"));
+			    t.setTypeString(rs.getString("request"));
+			    e.setNewStatusString(rs.getString("t_status"));
+			    e.setDate(rs.getDate("issue_date"));
+				    
+				    
+				    
+				    tickets.add(t); //it's something like that
+				
+			}
+		
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
+		return tickets;
+	}
+
+	@Override
+	public List<Ticket> selectAllRejectedTickets() {
+		List<Ticket> tickets = new ArrayList<>();
+		PreparedStatement ps;
+		
+		String sql = "SELECT * FROM ticket_table tt, ticket_history th WHERE th.t_status = 'REJECTED' AND tt.ticket_id = th.ticket_id";
+		
+		try {
+			ps = conn.prepareStatement(sql);
+
+			ResultSet rs = ps.executeQuery();
+			
+			// need to figure out how to make a date into an
+			while (rs.next()) {
+				Ticket t = new Ticket();
+			    TicketStatusEvent e = new TicketStatusEvent();
+			    
+			    t.setId(rs.getInt("ticket_id"));
+			    emp.setEmpId(rs.getInt("employee_id"));
+			    t.setDescription(rs.getString("description"));
+			    t.setStatusString(rs.getString("status"));
+			    t.setTypeString(rs.getString("request"));
+			    e.setNewStatusString(rs.getString("t_status"));
+			    e.setDate(rs.getDate("issue_date"));
+				    
+				    
+				    
+				    tickets.add(t); //it's something like that
+				
+			}
+		
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
+		return tickets;
 	}
 	
 	

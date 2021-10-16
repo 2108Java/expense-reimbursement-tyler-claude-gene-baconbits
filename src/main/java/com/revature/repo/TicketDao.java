@@ -28,7 +28,11 @@ public interface TicketDao {
 	
 	public List<Ticket> selectAllTickets();
 	
+	public List<Ticket> selectAllPendingTickets();
 	
+	public List<Ticket> selectAllApproedTickets();
+	
+	public List<Ticket> selectAllRejectedTickets();
 	
 	// Updates your tickets
 	
@@ -42,9 +46,6 @@ public interface TicketDao {
 	
 	public boolean deleteTicket(int id);
 
-	public static ArrayList<TicketStatusEvent> selectAllStatusEventForTicket(int id) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+	
 
 }
