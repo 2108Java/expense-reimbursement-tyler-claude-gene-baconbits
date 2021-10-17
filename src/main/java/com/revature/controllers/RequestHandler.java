@@ -107,7 +107,6 @@ public class RequestHandler {
 						ctx.res.sendRedirect("/login");
 					}
 
-	
 				});
 			
 			

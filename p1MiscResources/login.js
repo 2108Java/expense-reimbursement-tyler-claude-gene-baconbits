@@ -89,7 +89,7 @@ function loginUser(){
     xhttp.open("POST", "/login"); //config the url and the method
     console.log("xhttp is open");
     xhttp.send(data);
-    console.log("xhttp has sent");   
+    console.log("xhttp has sent");
  
     
 }

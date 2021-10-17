@@ -13,15 +13,17 @@ function Ticket(id,empId,amount,description,type,status){
     this.description = description;
     this.type = type;
     this.status = status;
-	// private ArrayList<TicketStatusEvent> ticketHistory;
+	// private ArrayList<TicketStatusEvent> ticketHistory; //will display this separately, I think
     }
 
 
 
     
-function manipulateDOM(Employee) {
+function manipulateDOM(Ticket) {
     console.log("the manipulateDOM function just started");
-        // document.appendChild // this will be series of appends to display the logged in user
+        document.getElementById("resultsBody").appendChild(); //keep appending properties as child rows to table
+        
+        
 
 }
    
@@ -56,15 +58,15 @@ function searchTickets(){
             console.log(this.responseText); //may look like JSON, but is only text representation
             let responseObject = JSON.parse(this.responseText);
             
-            let searchResponse = {
-                    responseObject//finish
-                    this.responseText
+            let searchResults = new Ticket(
+                responseObject.id, 
+                responseObject.empId, 
+                responseObject.amount,
+                responseObject.description,
+                responseObject.type,
+                responseObject.status
+                )
 
-                }
-            
-            searchResults = new Ticket[] ( //wanna make a new ticket array somehow
-
-                );
             
             manipulateDOM(searchResults);
 

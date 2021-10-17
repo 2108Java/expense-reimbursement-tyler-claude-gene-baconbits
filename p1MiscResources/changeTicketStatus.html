@@ -4,42 +4,48 @@
         <meta charset="ISO-8859-1">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="shortcut icon" href="#">
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
         <title>Reimbursement Portal Login</title>
     </head>
 
 <body>
-    <div class="jumbotron">
+    <div class="container">
 		<br>
 		<h1>Welcome to the Employee Reimbursement Portal</h1>
 		    <h2>A Service Provided by Your Company</h2>
     </div>
 
     <br>
-    <div id="managerControls"> <!-- a div for every manager function, with associated buttons, inputs, ids-->
+    <div class="container" id="managerControls"> <!-- a div for every manager function, with associated buttons, inputs, ids-->
         
         <div id="searchTickets">
-            <div>
-                <br> <!-- search by name-->
-                    <input name="searchNames" id="searchNames" value="Search Tickets By Employee Name" type="text" class="form control">
-                    <input id="searchNamesButton" value="Submit" type="submit" class="form control">
-                <br>
-            </div>
-    
-            <div> 
-                <br> <!--search by empId-->
-                    <input name="searchEmpId" id="searchEmpId" value="Search Tickets By Employee Id#" type="text" class="form control">
-                    <input id="searchEmpIdButton" value="Submit" type="submit" class="form control">
-                <br>
-            </div>
-
+            <hr>
+            <br><br/>
+            <h3>Search Tickets</h3>
+                <form action="/changeTicketStatus" method="POST"> 
+                    <div>
+                        <br> <!-- search by name-->
+                            <input name="searchNames" id="searchNames" value="By Employee Last Name" type="text" class="form control">
+                            <input id="searchNamesButton" value="Submit" type="submit" class="form control">
+                        <br>
+                    </div>
+            
+                    <div> 
+                        <br> <!--search by empId-->
+                            <input name="searchEmpId" id="searchEmpId" value="By Employee Id#" type="text" class="form control">
+                            <input id="searchEmpIdButton" value="Submit" type="submit" class="form control">
+                        <br>
+                    </div>
+                </form>
         </div> <!--end of div : "searchTickets"-->
 
         <!--comeback to finish-->
 
     </div> <!--end of "managerControls"-->
 
-    <div id="searchResults">
+    <div class="container" id="searchResults">
+        <br><br/>
         <table class="table">
             <thead class="table-primary">
                 <tr>
@@ -54,7 +60,7 @@
                     <th scope="col"><h3>Amount</h3></th>
                 </tr>
             </thead>
-            <tbody>
+            <tbody id="resultsBody"> <!-- addChild node to this element, I think-->
                 <tr scope="row" id= "ticket">
                     <td id="ticket_id"></td>
                     <td id="date_made"></td>
