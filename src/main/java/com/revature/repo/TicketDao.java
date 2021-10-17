@@ -12,13 +12,13 @@ public interface TicketDao {
 	
 	// Creates a new Ticket.
 	
-	public boolean createTicket(int employee_id, double amount, RequestType type, String description, TicketStatus status);
+	public boolean insertNewTicket(Ticket t);
 	
 	// Select Ticket(s) for the employee and the Manager.
 	
 	public Ticket selectTicket(int id);
 	
-	public List<Ticket> selectYourOwnTickets(int employee_id);
+	public List<Ticket> selectUserTickets(int employee_id);
 	
 	public List<Ticket> selectYourTicketsByStatus(int employee_id, TicketStatus status);
 	
@@ -28,7 +28,11 @@ public interface TicketDao {
 	
 	public List<Ticket> selectAllTickets();
 	
+	public List<Ticket> selectAllPendingTickets();
 	
+	public List<Ticket> selectAllApproedTickets();
+	
+	public List<Ticket> selectAllRejectedTickets();
 	
 	// Updates your tickets
 	
@@ -42,9 +46,8 @@ public interface TicketDao {
 	
 	public boolean deleteTicket(int id);
 
-	public static ArrayList<TicketStatusEvent> selectAllStatusEventForTicket(int id) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+	
+
+	
 
 }

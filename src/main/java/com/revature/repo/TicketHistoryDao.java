@@ -1,34 +1,23 @@
 package com.revature.repo;
 
+import com.revature.models.TicketStatusEvent;
+
 public interface TicketHistoryDao {
 	
 	// Creates a new timestamp
 	
-	public boolean insertTimeStamp(int ticketId);
+	public boolean insertTicketStatus(int ticketId);
 	
-	// Selects a timestamp
+	// Updates a ticket's history
 	
-	public void selectATimeStamp();
+	public boolean updateStatusToRejected(int ticketId);
 	
-	// Select an your own timestamp
+	public boolean updateStatusToApproved(int ticketId);
 	
-	public void selectYourOwnTimeStamp();
+	public boolean updateStatusToPending(int ticketId);
 	
-	// Select an employee's timestamp
 	
-	public void selectEmployeeTimeStamp();
 	
-	// Selects all the timestamps
-	
-	public void selectAllTimeStamps();
-	
-	// Updates with a new timestamp
-	
-	/* public void updateWithNewTimeStamp();*/
-	
-	// Delete a time stamp
-	
-	public boolean deleteTimeStamp();
 	
 
 }
