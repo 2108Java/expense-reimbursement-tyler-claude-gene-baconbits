@@ -1,6 +1,11 @@
 package com.revature.repo;
 
+import java.util.List;
+
 import com.revature.models.Employee;
+import com.revature.models.Ticket;
+import com.revature.models.TicketStatusEvent;
+
 
 public interface EmployeeDao {
 
@@ -17,6 +22,18 @@ public interface EmployeeDao {
 	public Employee selectEmployeeById(int id);
 	
 	public boolean selectCheckUserName(String username);
+
+	public List<Ticket> selectUserTickets(int employee_id);
+	
+	public List<TicketStatusEvent> selectAllTicketHistoryForUser(int userId);
+	
+	public List<Ticket> selectAllTicketsForUser(int userId);
+	
+	public List<Ticket> selectAllPendingTicketsForUser(int userId);
+	
+	public List<Ticket> selectAllRejectedTicketsForUser(int userId);
+	
+	public List<Ticket> selectAllApprovedTicketsForUser(int userId);
 	
 	// Update an Employee because reasons
 	

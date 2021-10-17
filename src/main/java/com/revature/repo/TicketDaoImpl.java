@@ -22,10 +22,11 @@ public class TicketDaoImpl implements TicketDao {
 	Employee emp;
 	
 	@Override
-	public boolean createTicket(int employee_id, double amount, RequestType type, String description, TicketStatus status) {
+	public boolean insertNewTicket(Ticket t) {
 		boolean success = false;
 		
-		String sql = "INSERT INTO ticket_table(employee_id, amount, type, description), VALUES (?, ?, ?, ?)";
+		String sql = "INSERT INTO ticket_table (employee_id, amount, type, description), VALUES (?, ?, ?, ?)";
+		
 		
 		try {
 			dispatch.getConnection();
@@ -33,9 +34,9 @@ public class TicketDaoImpl implements TicketDao {
 			PreparedStatement ps = conn.prepareStatement(sql);
 			
 			ps.setInt(1, emp.getEmpId());
-			ps.setDouble(2, amount);
-			ps.setString(3, type.name());
-			ps.setString(4, description);
+			ps.setDouble(2, t.getAmount());
+			ps.setString(3, t.getType().name());
+			ps.setString(4, t.getDescription());
 			
 			
 			
@@ -48,7 +49,7 @@ public class TicketDaoImpl implements TicketDao {
 			e.printStackTrace();
 		}
 		
-		
+		historyDao.insertTicketStatus(t.getId());
 		
 		
 		return success;
@@ -95,10 +96,12 @@ public class TicketDaoImpl implements TicketDao {
 	}
 
 	@Override
-	public List<Ticket> selectYourOwnTickets(int employee_id) {
+	public List<Ticket> selectUserTickets(int employee_id) {
 
-
+		ArrayList<TicketStatusEvent> events = new ArrayList<>();
 		List<Ticket> selectedTickets = new ArrayList<>();
+		
+		
 		PreparedStatement ps;
 		String sql = "SELECT * FROM ticket_table INNER JOIN ticket_history_table th ON ti.employee_id = ? AND ti.ticket_id = th.ticket_id ";
 		
@@ -111,6 +114,20 @@ public class TicketDaoImpl implements TicketDao {
 			
 			while (rs.next()) {
 				
+				Ticket t = new Ticket();
+			    TicketStatusEvent e = new TicketStatusEvent();
+			    t.setId(rs.getInt("ticket_id"));
+			    emp.setEmpId(rs.getInt("employee_id"));
+			    t.setDescription(rs.getString("description"));
+			    t.setTypeString(rs.getString("request"));
+			    e.setNewStatusString(rs.getString("t_status"));
+			    e.setDate(rs.getDate("issue_date"));
+			    
+			    events.add(e);
+			    t.setTicketHistory(events);
+			    
+			    selectedTickets.add(t);
+			    
 			}
 			
 			
@@ -128,7 +145,7 @@ public class TicketDaoImpl implements TicketDao {
 	public List<Ticket> selectYourTicketsByStatus(int employee_id, TicketStatus status) {
 		PreparedStatement ps;
 		List<Ticket> tickets = new ArrayList<>();
-		List<TicketStatusEvent> events = new ArrayList<>();
+		ArrayList<TicketStatusEvent> events = new ArrayList<>();
 		
 		String sql = "SELECT * FROM ticket_table tt, ticket_history th WHERE tt.employee_id = ? AND th.t_status = ?";
 		
@@ -152,9 +169,9 @@ public class TicketDaoImpl implements TicketDao {
 						    e.setNewStatusString(rs.getString("t_status"));
 						    e.setDate(rs.getDate("issue_date"));
 						    
-						    
-						    tickets.add(t); //it's something like that
 						    events.add(e);
+						    t.setTicketHistory(events);
+						    tickets.add(t); //it's something like that
 						}
 				
 			}
@@ -173,7 +190,7 @@ public class TicketDaoImpl implements TicketDao {
 	public List<Ticket> selectEmployeeTickets(int employee_id) {
 		
 		List<Ticket> tickets = new ArrayList<>();
-		List<TicketStatusEvent> events = new ArrayList<>();
+		ArrayList<TicketStatusEvent> events = new ArrayList<>();
 		
 		PreparedStatement ps;
 		
@@ -199,9 +216,11 @@ public class TicketDaoImpl implements TicketDao {
 						    e.setNewStatusString(rs.getString("t_status"));
 						    e.setDate(rs.getDate("issue_date"));
 						    
-						    
-						    tickets.add(t); //it's something like that
 						    events.add(e);
+						    t.setTicketHistory(events);
+						   
+						    tickets.add(t); //it's something like that
+						   
 			}		
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -217,7 +236,7 @@ public class TicketDaoImpl implements TicketDao {
 		
 		PreparedStatement ps;
 		List<Ticket> selectedTickets = new ArrayList<>();
-		List<TicketStatusEvent> events = new ArrayList<>();
+		ArrayList<TicketStatusEvent> events = new ArrayList<>();
 		String sql = "SELECT * FROM ticket_table WHERE employee_id = ? AND status = ?";
 		
 		try {
@@ -241,9 +260,10 @@ ResultSet rs = ps.executeQuery();
 			    e.setDate(rs.getDate("issue_date"));
 				    
 				    
+			    events.add(e);
+				t.setTicketHistory(events);    
+				selectedTickets.add(t); //it's something like that
 				    
-				    selectedTickets.add(t); //it's something like that
-				    events.add(e);
 			}
 			
 		} catch (SQLException e) {
@@ -258,7 +278,7 @@ ResultSet rs = ps.executeQuery();
 	 
 	@Override
 	public List<Ticket> selectAllTickets() {
-		
+		ArrayList<TicketStatusEvent> events = new ArrayList<>();
 		List<Ticket> tickets = new ArrayList<>();
 		PreparedStatement ps;
 		
@@ -283,7 +303,8 @@ ResultSet rs = ps.executeQuery();
 			    e.setDate(rs.getDate("issue_date"));
 				    
 				    
-				    
+				    events.add(e);
+				    t.setTicketHistory(events);
 				    tickets.add(t); //it's something like that
 				
 			}
@@ -368,6 +389,7 @@ ResultSet rs = ps.executeQuery();
 	@Override
 	public List<Ticket> selectAllPendingTickets() {
 		List<Ticket> tickets = new ArrayList<>();
+		ArrayList<TicketStatusEvent> events = new ArrayList<>();
 		PreparedStatement ps;
 		
 		String sql = "SELECT * FROM ticket_table tt, ticket_history th WHERE th.t_status = 'PENDING' AND tt.ticket_id = th.ticket_id";
@@ -390,7 +412,8 @@ ResultSet rs = ps.executeQuery();
 			    e.setNewStatusString(rs.getString("t_status"));
 			    e.setDate(rs.getDate("issue_date"));
 				    
-				    
+				    events.add(e);
+				    t.setTicketHistory(events);
 				    
 				    tickets.add(t); //it's something like that
 				
@@ -408,6 +431,7 @@ ResultSet rs = ps.executeQuery();
 
 	@Override
 	public List<Ticket> selectAllApproedTickets() {
+		ArrayList<TicketStatusEvent> events = new ArrayList<>();
 		List<Ticket> tickets = new ArrayList<>();
 		PreparedStatement ps;
 		
@@ -431,7 +455,8 @@ ResultSet rs = ps.executeQuery();
 			    e.setNewStatusString(rs.getString("t_status"));
 			    e.setDate(rs.getDate("issue_date"));
 				    
-				    
+				    events.add(e);
+				    t.setTicketHistory(events);
 				    
 				    tickets.add(t); //it's something like that
 				
@@ -448,6 +473,7 @@ ResultSet rs = ps.executeQuery();
 
 	@Override
 	public List<Ticket> selectAllRejectedTickets() {
+		ArrayList<TicketStatusEvent> events = new ArrayList<>();
 		List<Ticket> tickets = new ArrayList<>();
 		PreparedStatement ps;
 		
@@ -471,7 +497,8 @@ ResultSet rs = ps.executeQuery();
 			    e.setNewStatusString(rs.getString("t_status"));
 			    e.setDate(rs.getDate("issue_date"));
 				    
-				    
+				    events.add(e);
+				    t.setTicketHistory(events);
 				    
 				    tickets.add(t); //it's something like that
 				
