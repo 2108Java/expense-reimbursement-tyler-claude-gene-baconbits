@@ -94,6 +94,8 @@ public class Ticket {
 		this.ticketHistory = ticketHistory;
 	}
 
+	
+	//FOR WORKING WITH ENUMS
 	public String getTypeString() {
         return type.name();
     }
@@ -107,7 +109,7 @@ public class Ticket {
 	public void setStatusString(String status) {
 	        this.status = TicketStatus.valueOf(status);
 	    }
-	
+ master
 }
 
 
