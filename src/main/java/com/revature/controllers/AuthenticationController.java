@@ -32,21 +32,29 @@ public class AuthenticationController {
 		String username = ctx.formParam("username");
 		String password = ctx.formParam("password");
 
-		boolean authenticated = AuthenticationService.authenticate(username, password);
+		try {
+			
+			boolean authenticated = AuthenticationService.authenticate(username, password);
+			
+			if(authenticated) {
+				//if authenticated, send to home page and give session credential
+				Employee emp = EmployeeService.getUserByUsername(username);
+				ctx.sessionAttribute("user", emp);
+				ctx.sessionAttribute("empId", emp.getEmpId());
+				if(emp.getIsManager()) {
+					ctx.sessionAttribute("access", "manager");
+					ctx.redirect("/changeTicketStatus.html");
+				} else ctx.sessionAttribute("access", "employee");
+					return "/landingPage";
+					} else {
+						ctx.res.setStatus(401);
+						return "/login";
+					}
+				return "/landingPage";
+		} catch (Exception e) {
+			System.out.println("Something went wrong!");
+		}
 		
-		if(authenticated) {
-			//if authenticated, send to home page and give session credential
-			Employee emp = EmployeeService.getUserByUsername(username);
-			ctx.sessionAttribute("user", emp);
-			ctx.sessionAttribute("empId", emp.getEmpId());
-			if(emp.getIsManager()) {
-				ctx.sessionAttribute("access", "manager");
-			} else ctx.sessionAttribute("access", "employee");
-				} else {
-					ctx.res.setStatus(401);
-					return "/login";
-				}
-			return "/landingPage";
 
 	}
 }

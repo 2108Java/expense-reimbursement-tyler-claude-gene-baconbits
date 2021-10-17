@@ -52,7 +52,7 @@ public class RequestHandler {
 					ctx.req.getRequestDispatcher("login.html").forward(ctx.req, ctx.res));
 				
 				
-				app.get("/login", ctx -> 			
+				app.post("/login", ctx -> 			
 	//					ctx.req.getRequestDispatcher("login.html").forward(ctx.req, ctx.res)); //think I actually want to call the authentication method to return correct page
 						ctx.redirect(AuthenticationController.authenticateUser(ctx)));
 			
@@ -62,7 +62,7 @@ public class RequestHandler {
 			//endpoint for LANDING page
 				app.get("/landingPage", ctx -> {
 						if(checkSession(ctx)) {
-							ctx.req.getRequestDispatcher("landingPage.html").forward(ctx.req, ctx.res);
+							ctx.req.getRequestDispatcher("ticketLandingPage.html").forward(ctx.req, ctx.res);
 						} else {
 							ctx.res.sendRedirect("/login");
 						} 
