@@ -12,9 +12,11 @@ import com.revature.models.Ticket;
 
 public class ConnectionDispatch {
 
+
 	private static final String URL = "jdbc:postgresql://database-1.c53twceruauh.us-east-2.rds.amazonaws.com";
 	private static final String USERNAME = "postgres";
 	private static final String PASSWORD = "d4t4Y0shi?";
+
 	
 	PreparedStatement prepared; 
 	
@@ -27,12 +29,15 @@ public class ConnectionDispatch {
 	}
 	
 	
-	public Connection getConnection() throws SQLException{
+	public final Connection getConnection() throws SQLException{
 		
+		
+		try {
 		Connection conn = DriverManager.getConnection(URL, USERNAME, PASSWORD);
-		
-		return conn;
-		
+		this.connect = conn;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} return this.connect;
 	}
 	
 	

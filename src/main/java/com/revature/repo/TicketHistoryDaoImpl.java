@@ -7,6 +7,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 import java.util.TimeZone;
 
 import com.revature.models.Employee;
@@ -41,7 +42,7 @@ public class TicketHistoryDaoImpl implements TicketHistoryDao {
 		
 		try {
 			
-			dispatch.getConnection();
+			this.conn = dispatch.getConnection();
 			
 			PreparedStatement ps = conn.prepareStatement(sql);
 			
@@ -183,4 +184,14 @@ try {
 
 	
 
+
+
+
+	@Override
+	public List<TicketStatusEvent> selectAllTicketStatusEvents() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }
+

@@ -46,8 +46,28 @@ public interface TicketDao {
 	
 	public boolean deleteTicket(int id);
 
+
 	
 
 	
+
+	public ArrayList<TicketStatusEvent> selectAllStatusEventForTicket(int id);
+
+	public List<Ticket> selectAllPendingTickets();
+
+	public List<Ticket> selectAllApprovedTickets();
+
+	public List<Ticket> selectAllRejectedTickets();
+
+	public List<Ticket> updateAllPendingToApproved();
+
+	public Ticket updateStatusToPending(int id);
+
+	public Ticket updateStatusToRejected(int id);
+
+	public Ticket updateStatusToApproved(int id);
+
+	public List<Ticket> selectTicketsByEmployeeName(String empName);
+
 
 }

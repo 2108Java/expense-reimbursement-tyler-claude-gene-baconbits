@@ -1,5 +1,9 @@
 package com.revature.repo;
 
+
+import java.util.List;
+
+
 import com.revature.models.TicketStatusEvent;
 
 public interface TicketHistoryDao {
@@ -17,7 +21,11 @@ public interface TicketHistoryDao {
 	public boolean updateStatusToPending(int ticketId);
 	
 	
-	
+
+	public boolean deleteTimeStamp();
+
+	public List<TicketStatusEvent> selectAllTicketStatusEvents();
+
 	
 
 }
