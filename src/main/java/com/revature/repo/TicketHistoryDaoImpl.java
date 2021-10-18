@@ -15,7 +15,7 @@ import com.revature.models.Ticket;
 import com.revature.models.TicketStatus;
 import com.revature.models.TicketStatusEvent;
 import com.revature.utilities.ConnectionDispatch;
-import com.revature.repo.TicketDaoImpl;
+
 
 public class TicketHistoryDaoImpl implements TicketHistoryDao {
 
@@ -51,7 +51,7 @@ public class TicketHistoryDaoImpl implements TicketHistoryDao {
 			
 			
 			goodOps = ps.execute();
-			tDao.selectAllTickets();
+			
 			
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -79,7 +79,7 @@ public class TicketHistoryDaoImpl implements TicketHistoryDao {
 			ps.setInt(2, ticketId);
 			
 			goodOps = ps.execute();
-			tDao.selectAllTickets();
+			
 			
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -189,8 +189,45 @@ try {
 
 	@Override
 	public List<TicketStatusEvent> selectAllTicketStatusEvents() {
+	ArrayList<TicketStatusEvent> events = new ArrayList<>();
+		
+		String sql = "SELECT * FROM ticket_history";
+		
+		try {
+			dispatch.getConnection();
+			
+			PreparedStatement ps = conn.prepareStatement(sql);
+			
+			
+			ResultSet rs = ps.executeQuery();
+				
+						while (rs.next()) {
+							
+							TicketStatusEvent event = new TicketStatusEvent();
+							event.setTickId(rs.getInt("ticket_id"));
+							event.setNewStatusString(rs.getString("t_status"));
+							event.setDate(rs.getDate("issue_date"));
+							
+							events.add(event);
+							
+						}
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
+		
+		return events;
+	}
+	
+
+
+	@Override
+	public boolean deleteTimeStamp() {
 		// TODO Auto-generated method stub
-		return null;
+		return false;
 	}
 
 }

@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- CSS only -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <title>Tickets</title>
+</head>
+<body>
+    <div class="container">
+        <br />
+        <h1>Welcome to the Employee Reimbursement Portal</h1>
+        <h2>A Service Provided by Your Company</h2>
+    </div>
+
+    <div class="container">
+        
+        <form action="" method="" >
+            <table id="ticket-table">
+                <thead>
+                    <tr>
+                        <th colspan="6">Hello!</th>
+                        
+                    </tr>
+                    <tr>
+                        <th>Ticket #</th>
+                        <th>Date</th>
+                        <th>Type of Request</th>
+                        <th>Description</th>
+                        <th>Ticket Status</th>
+                        <th>Amount</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr id= "row">
+                        <td id="ticket_id">-1</td>
+                        <td id="date_made">1/1/20249</td>
+                        <td id="request_type">OTHER</td>
+                        <td id="description">Take on Aliens</td>
+                        <td id="status">REJECTED</td>
+                        <td id="amount">20000000.00</td>
+                        <td id="delete"><input type="submit" id="" value="Delete Ticket (coming soon!)"></td>
+                    </tr>
+                </tbody>
+            </table>
+        </form>
+    </div>
+      
+
+        <div class="container" id="button-container">
+            <div class="container"> 
+                <!-- Form to make a ticket and put it in the database -->
+                <form action="/newTicket" method="GET" id="PostTicket" title="Make a new ticket!">
+                    <label>Make A Ticket!</label><br />
+                    <label for="request">What type of Request?</label>
+                        <select name="Request" id="request"> 
+                            <option value ="FOOD">Food</option>
+                            <option value ="LODGING">Lodging</option>
+                            <option value ="TRAVEL">Travel</option>
+                            <option value ="OTHER">Other</option>
+                        </select>
+                    <br />
+                    <label for="desription">Describe the Expense:</label><textarea id="describe" rows="5" cols ="33" >Post your description here. </textarea> 
+                    <br />
+                    <label for="amount">Post your amount for Reimbursement:</label><input type="text" name="" id="post_amount"placeholder=""><br/> 
+                    <input type="submit" id="ticket_maker" value="Make Ticket" > 
+                    
+                </form>
+            </div>
+            <div>
+                    <!-- Form to retrieve the ticket from the database -->
+                <form action="/viewTickets" method="GET">
+                    
+                    <input type="text" id="" placeholder=""><br/>                 
+                    <input type="submit" id="get_tickets" value="Get your ticket">
+                </form>
+                <form action="/viewTickets" method="GET">
+
+                    <input type="submit" id="get_all_tickets" value="Get all your tickets">
+
+                </form>
+            </div>    
+            <div>
+                <!-- extra function -->
+                <form action="" method="">
+
+                    
+                </form>
+
+
+            </div>
+            
+        </div>
+
+            
+        </div>
+
+    <footer>
+        <!-- JavaScript Bundle with Popper -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+        <script src="landing.js"></script>
+    </footer>
+</body>
+</html>

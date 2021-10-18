@@ -13,6 +13,7 @@ public class AuthenticationService {
 	}
 	
 	public boolean authenticate(String username, String password) {
+		
 		return empDao.selectUserNameAndPass(username,password);
 	}
 	

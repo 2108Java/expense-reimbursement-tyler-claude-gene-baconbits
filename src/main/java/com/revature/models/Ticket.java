@@ -19,9 +19,13 @@ public class Ticket {
 
 		
 	//CONSTRUCTORS
-	public Ticket() {
+	public Ticket(ArrayList<TicketStatusEvent> ticketHistory) {
 		super();
-		this.ticketHistory = TicketDao.selectAllStatusEventForTicket(this.id);
+		this.ticketHistory = ticketHistory;
+	}
+	
+	public Ticket() {
+		
 	}
 
 

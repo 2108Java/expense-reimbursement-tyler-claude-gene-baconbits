@@ -36,7 +36,7 @@ public class AuthenticationController {
 			
 			try {
 			boolean authenticated = as.authenticate(username, password);
-			
+			System.out.println(authenticated);
 			if(authenticated) {
 				//if authenticated, send to home page and give session credential
 				this.emp = es.getUserByUsername(username);

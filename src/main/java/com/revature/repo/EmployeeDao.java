@@ -47,7 +47,7 @@ public interface EmployeeDao {
 
 	public Ticket selectUserTicket(int id);
 
-	public List<TicketStatusEvent> selectAllTicketHistoryForUser(int userId);
+	
 
 	public List<Ticket> selectRejectedTicketsForUser(int userId);
 
@@ -56,7 +56,7 @@ public interface EmployeeDao {
 
 	public List<Ticket> selectPendingTicketsForUser(int userId);
 
-	public List<Ticket> selectAllTicketsForUser(int userId);
+	
 
 	public List<Employee> selectAllEmployees();
 	

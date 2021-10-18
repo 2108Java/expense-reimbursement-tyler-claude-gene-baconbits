@@ -1,4 +1,4 @@
-package com.revature.controllers;
+   package com.revature.controllers;
 
 import io.javalin.Javalin;
 import io.javalin.http.Context;
@@ -45,7 +45,7 @@ public class RequestHandler {
 			//endpoint for LANDING page
 				app.get("/landingPage", ctx -> {
 						if(checkSession(ctx)) {
-							ctx.req.getRequestDispatcher("ticketLandingPage.html").forward(ctx.req, ctx.res);
+							ctx.req.getRequestDispatcher("landingPage.html").forward(ctx.req, ctx.res);
 						} else {
 							ctx.res.sendRedirect("/login");
 						} 
@@ -63,7 +63,7 @@ public class RequestHandler {
 						} else {
 							ctx.res.sendRedirect("/login");
 						}				 
-						ctx.json(EmployeeTicketController.submitMyTicket(ctx)); 
+						ctx.json(ec.submitMyTicket(ctx)); 
 					});
 		
 			
@@ -75,7 +75,7 @@ public class RequestHandler {
 						} else {
 							ctx.res.sendRedirect("/login");
 						}
-						ctx.json(EmployeeTicketController.getAllMyTickets(ctx));
+						ctx.json(ec.getAllMyTickets(ctx));
 					});
 		
 					

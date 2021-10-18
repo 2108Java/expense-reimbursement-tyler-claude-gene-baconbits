@@ -48,7 +48,7 @@ function loginUser(){
 
 
     //then specify the URL we want to trigger
-    const theURL = "https://"; //finish link? local uri? unneccessary?
+    const theURL = "https://localhost:8000"; //finish link? local uri? unneccessary?
 
 
     

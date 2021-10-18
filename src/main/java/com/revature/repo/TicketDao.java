@@ -53,11 +53,11 @@ public interface TicketDao {
 
 	public ArrayList<TicketStatusEvent> selectAllStatusEventForTicket(int id);
 
-	public List<Ticket> selectAllPendingTickets();
+	
 
 	public List<Ticket> selectAllApprovedTickets();
 
-	public List<Ticket> selectAllRejectedTickets();
+	
 
 	public List<Ticket> updateAllPendingToApproved();
 

@@ -512,6 +512,48 @@ ResultSet rs = ps.executeQuery();
 		
 		return tickets;
 	}
+
+	@Override
+	public ArrayList<TicketStatusEvent> selectAllStatusEventForTicket(int id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<Ticket> selectAllApprovedTickets() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<Ticket> updateAllPendingToApproved() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Ticket updateStatusToPending(int id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Ticket updateStatusToRejected(int id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Ticket updateStatusToApproved(int id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<Ticket> selectTicketsByEmployeeName(String empName) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 	
 	
 	

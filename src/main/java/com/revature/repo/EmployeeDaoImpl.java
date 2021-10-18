@@ -74,7 +74,7 @@ public class EmployeeDaoImpl implements EmployeeDao {
 				
 				emp.setEmpId(rs.getInt("employee_id"));
 				emp.setUserName(rs.getString("username"));
-				emp.setPassword(rs.getString("password"));
+				emp.setPassword(rs.getString("pass_word"));
 				emp.setFirstName(rs.getString("first_name"));
 				emp.setLastName(rs.getString("last_name"));
 				emp.setEmail(rs.getString("email"));
@@ -110,7 +110,7 @@ public class EmployeeDaoImpl implements EmployeeDao {
 				
 				emp.setEmpId(rs.getInt("employee_id"));
 				emp.setUserName(rs.getString("username"));
-				emp.setPassword(rs.getString("password"));
+				emp.setPassword(rs.getString("pass_word"));
 				emp.setFirstName(rs.getString("first_name"));
 				emp.setLastName(rs.getString("last_name"));
 				emp.setEmail(rs.getString("email"));
@@ -452,11 +452,7 @@ public class EmployeeDaoImpl implements EmployeeDao {
 		return null;
 	}
 
-	@Override
-	public List<TicketStatusEvent> selectAllTicketHistoryForUser(int userId) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+	
 
 	@Override
 	public List<Ticket> selectRejectedTicketsForUser(int userId) {
@@ -476,11 +472,7 @@ public class EmployeeDaoImpl implements EmployeeDao {
 		return null;
 	}
 
-	@Override
-	public List<Ticket> selectAllTicketsForUser(int userId) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+
 
 	@Override
 	public List<Employee> selectAllEmployees() {

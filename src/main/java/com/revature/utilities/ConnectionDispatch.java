@@ -13,7 +13,7 @@ import com.revature.models.Ticket;
 public class ConnectionDispatch {
 
 
-	private static final String URL = "jdbc:postgresql://database-1.c53twceruauh.us-east-2.rds.amazonaws.com";
+	private static final String URL = "jdbc:postgresql://database-1.c53twceruauh.us-east-2.rds.amazonaws.com/";
 	private static final String USERNAME = "postgres";
 	private static final String PASSWORD = "d4t4Y0shi?";
 
@@ -31,14 +31,12 @@ public class ConnectionDispatch {
 	
 	public final Connection getConnection() throws SQLException{
 		
+			
+			Connection conn = DriverManager.getConnection(URL, USERNAME, PASSWORD);
 		
-		try {
-		Connection conn = DriverManager.getConnection(URL, USERNAME, PASSWORD);
-		this.connect = conn;
-		} catch (SQLException e) {
-			e.printStackTrace();
-		} return this.connect;
-	}
+			return conn;
+		
+		}
 	
 	
 }

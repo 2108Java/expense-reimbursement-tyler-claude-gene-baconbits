@@ -6,13 +6,13 @@ import com.revature.models.*;
 import com.revature.repo.EmployeeDao;
 import com.revature.repo.EmployeeDaoImpl;
 import com.revature.repo.TicketDao;
-import com.revature.repo.TicketDaoImp;
+import com.revature.repo.TicketDaoImpl;
 import com.revature.repo.TicketHistoryDao;
 import com.revature.repo.TicketHistoryDaoImpl;
 
 public class ManagerService {
 
-		private TicketDao tDao = new TicketDaoImp();
+		private TicketDao tDao = new TicketDaoImpl();
 		private EmployeeDao eDao = new EmployeeDaoImpl();
 		private TicketHistoryDao hDao = new TicketHistoryDaoImpl();
 		
