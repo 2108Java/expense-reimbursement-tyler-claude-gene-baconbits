@@ -17,11 +17,12 @@ public class Ticket {
 	private TicketStatus status; //approved, pending, or rejected
 	private ArrayList<TicketStatusEvent> ticketHistory;
 
+	private TicketDao tDao = new TicketDaoImp();
 		
 	//CONSTRUCTORS
 	public Ticket() {
 		super();
-		this.ticketHistory = TicketDao.selectAllStatusEventForTicket(this.id);
+		this.ticketHistory = tDao.selectAllStatusEventForTicket(this.id);
 	}
 
 

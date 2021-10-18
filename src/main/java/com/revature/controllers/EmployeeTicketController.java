@@ -18,17 +18,17 @@ public class EmployeeTicketController {
 
 	//FIELDS
 	ArrayList<Ticket> ticketListForEmpDisplay = new ArrayList<Ticket>();
-	private EmployeeService empServ;
+	private EmployeeService es = new EmployeeService();
 	
 	
 	
 	//METHODS
 		
 
-			public static Context getAllMyTickets(Context ctx) {
+			public Context getAllMyTickets(Context ctx) {
 				int userId = Integer.parseInt(ctx.sessionAttribute("empId"));
 				List<Ticket> allTicketsForUser = new ArrayList<Ticket>();
-				allTicketsForUser = EmployeeService.getAllTicketsForUser(userId);
+				allTicketsForUser = es.getAllTicketsForUser(userId);
 				return ctx.json(allTicketsForUser);
 
 			}
@@ -36,16 +36,16 @@ public class EmployeeTicketController {
 			
 				
 				
-			public static Context getAllMyTicketsOfStatus(Context ctx) {
+			public Context getAllMyTicketsOfStatus(Context ctx) {
 				int userId = Integer.parseInt(ctx.sessionAttribute("empId"));
 				TicketStatus status = TicketStatus.valueOf(ctx.formParam("selectedStatus"));
 					switch (status) {
 						case PENDING:
-							return ctx.json(EmployeeService.getMyPendingTickets(userId));
+							return ctx.json(es.getMyPendingTickets(userId));
 						case APPROVED:
-							return ctx.json(EmployeeService.getMyApprovedTickets(userId));
+							return ctx.json(es.getMyApprovedTickets(userId));
 						case REJECTED:
-							return ctx.json(EmployeeService.getMyRejectedTickets(userId));
+							return ctx.json(es.getMyRejectedTickets(userId));
 						default:
 							return ctx;
 					}
@@ -54,38 +54,38 @@ public class EmployeeTicketController {
 			
 
 			
-			public static Context getAllMyPendingTickets(Context ctx) {
+			public Context getAllMyPendingTickets(Context ctx) {
 				int userId = Integer.parseInt(ctx.sessionAttribute("empId"));
 				List<Ticket> userPendingTickets = new ArrayList<Ticket>();
-				userPendingTickets = EmployeeService.getMyPendingTickets(userId);
+				userPendingTickets = es.getMyPendingTickets(userId);
 				return ctx.json(userPendingTickets);
 				
 			}
 			
 			
 			
-			public static Context getAllMyApprovedTickets(Context ctx) {
+			public Context getAllMyApprovedTickets(Context ctx) {
 				int userId = Integer.parseInt(ctx.sessionAttribute("empId"));
 				List<Ticket> userApprovedTickets = new ArrayList<Ticket>();
-				userApprovedTickets = EmployeeService.getMyApprovedTickets(userId);
+				userApprovedTickets = es.getMyApprovedTickets(userId);
 				return ctx.json(userApprovedTickets);
 			}
 
 			
 			
-			public static Context getAllMyRejectedTickets(Context ctx) {
+			public Context getAllMyRejectedTickets(Context ctx) {
 				int userId = Integer.parseInt(ctx.sessionAttribute("empId"));
 				List<Ticket> userRejectedTickets = new ArrayList<Ticket>();
-				userRejectedTickets = EmployeeService.getMyRejectedTickets(userId);
+				userRejectedTickets = es.getMyRejectedTickets(userId);
 				return ctx.json(userRejectedTickets);
 			}
 			
 			
 			
-			public static Context getAllMyTicketHistory(Context ctx) {
+			public Context getAllMyTicketHistory(Context ctx) {
 				int userId = Integer.parseInt(ctx.sessionAttribute("empId"));
 				List<TicketStatusEvent> userAllTicketHistory = new ArrayList<TicketStatusEvent>();
-				userAllTicketHistory = EmployeeService.getAllMyTicketHistory(userId);
+				userAllTicketHistory = es.getAllMyTicketHistory(userId);
 				return ctx.json(userAllTicketHistory);
 				
 			}
@@ -93,23 +93,23 @@ public class EmployeeTicketController {
 
 			
 			
-			public static Context getMyTicketAndHist(Context ctx) {
+			public Context getMyTicketAndHist(Context ctx) {
 				int id = Integer.parseInt(ctx.formParam("ticketId"));
-				Ticket t = EmployeeService.getMyTicketAndHist(id);
+				Ticket t = es.getMyTicketAndHist(id);
 				return ctx.json(t);
 			}
 			
 			
 
 
-			public static Context submitMyTicket(Context ctx) {
+			public Context submitMyTicket(Context ctx) {
 				Ticket t = new Ticket();
 					t.setAmount(Double.parseDouble(ctx.formParam("amount")));
 					t.setDescription(ctx.formParam("description"));
 					t.setStatus(TicketStatus.PENDING);
 					t.setType(RequestType.valueOf(ctx.formParam("type")));
 					t.setEmployeeId(Integer.parseInt(ctx.sessionAttribute("empId")));
-				return ctx.json(EmployeeService.submitTicketFromForm(t));
+				return ctx.json(es.submitTicketFromForm(t));
 			}
 
 

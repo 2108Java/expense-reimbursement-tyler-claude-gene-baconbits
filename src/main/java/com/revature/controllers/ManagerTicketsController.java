@@ -14,7 +14,6 @@ import com.revature.models.TicketStatusEvent;
 import com.revature.service.AuthenticationService;
 import com.revature.service.EmployeeService;
 import com.revature.service.ManagerService;
-import com.revature.service.UserService;
 import io.javalin.http.Context;
 
 
@@ -25,13 +24,13 @@ public class ManagerTicketsController {
 
 		//FIELDS
 		ArrayList<Ticket> ticketListForMgrDisplay = new ArrayList<Ticket>();
-		private ManagerService mgrServ;
+		private ManagerService ms = new ManagerService();
 
 		
 		//CONSTRUCTORS
 		public ManagerTicketsController(ManagerService mgrServ) {
 			super();
-			this.mgrServ = mgrServ;
+			this.ms = ms;
 		}
 		
 		
@@ -43,23 +42,23 @@ public class ManagerTicketsController {
 		
 		
 		//METHODS for DISPLAYING TICKETS
-		public static Context getAllTickets(Context ctx) {
+		public Context getAllTickets(Context ctx) {
 			List<Ticket> allTickets = new ArrayList<Ticket>();
-			allTickets = ManagerService.getAllTickets();
+			allTickets = ms.getAllTickets();
 			return ctx.json(allTickets);
 				
 		}
 		
 		
-		public static Context getAllTicketsOfStatus(Context ctx){
+		public Context getAllTicketsOfStatus(Context ctx){
 			TicketStatus status = TicketStatus.valueOf(ctx.formParam("selectedStatus"));
 			switch (status) {
 				case PENDING:
-					return ctx.json(ManagerService.getAllPendingTickets());
+					return ctx.json(ms.getAllPendingTickets());
 				case APPROVED:
-					return ctx.json(ManagerService.getAllApprovedTickets());
+					return ctx.json(ms.getAllApprovedTickets());
 				case REJECTED:
-					return ctx.json(ManagerService.getAllRejectedTickets());
+					return ctx.json(ms.getAllRejectedTickets());
 				default:
 					return ctx;
 			}
@@ -67,93 +66,93 @@ public class ManagerTicketsController {
 		
 		
 
-		public static Context getAllPendingTickets(Context ctx) {
+		public Context getAllPendingTickets(Context ctx) {
 			List<Ticket> allPendingTickets = new ArrayList<Ticket>();
-			allPendingTickets = ManagerService.getAllPendingTickets();
+			allPendingTickets = ms.getAllPendingTickets();
 			return ctx.json(allPendingTickets);
 		}
 		
 		
 		
-		public static Context getAllApprovedTickets(Context ctx) {
+		public Context getAllApprovedTickets(Context ctx) {
 			List<Ticket> allApprovedTickets = new ArrayList<Ticket>();
-			allApprovedTickets = ManagerService.getAllApprovedTickets();
+			allApprovedTickets = ms.getAllApprovedTickets();
 			return ctx.json(allApprovedTickets);
 			
 		}
 
 		
 		
-		public static Context getAllRejectedTickets(Context ctx) {
+		public Context getAllRejectedTickets(Context ctx) {
 			List<Ticket> allRejectedTickets = new ArrayList<Ticket>();
-			allRejectedTickets = ManagerService.getAllRejectedTickets();
+			allRejectedTickets = ms.getAllRejectedTickets();
 			return ctx.json(allRejectedTickets);
 	
 		}
 		
 		
 		
-		public static Context getAllTicketHistory(Context ctx) {
+		public Context getAllTicketHistory(Context ctx) {
 			List<TicketStatusEvent> allTicketStatusEvents = new ArrayList<TicketStatusEvent>();
-			allTicketStatusEvents = ManagerService.getAllTicketStatusEvents();
+			allTicketStatusEvents = ms.getAllTicketStatusEvents();
 			return ctx.json(allTicketStatusEvents);
 			
 		}
 
 
 		
-		public static Context getSomeTicketById(Context ctx) {
+		public Context getSomeTicketById(Context ctx) {
 			int id = Integer.parseInt(ctx.formParam("ticketId"));
 			Ticket t = new Ticket();
 			return ctx.json(t);
 		}
 		
 		
-		public static Context getTicketsByEmployeeName(Context ctx) {
+		public Context getTicketsByEmployeeName(Context ctx) {
 			String empName = ctx.formParam("employeeName");
 			List<Ticket> ticketsForEmployee = new ArrayList<Ticket>();
-			ticketsForEmployee = ManagerService.getAllTicketsByEmployeeName(empName);
+			ticketsForEmployee = ms.getAllTicketsByEmployeeName(empName);
 			return ctx.json(ticketsForEmployee);
 		}
 		
 		
 		//METHODS for UPDATING TICKETS
-		public static Context approveTicket(Context ctx) {
+		public Context approveTicket(Context ctx) {
 			int id = Integer.parseInt(ctx.formParam("ticketId"));
 			Ticket t = new Ticket();
-			t = ManagerService.approveTicket(id);
+			t = ms.approveTicket(id);
 			return ctx.json(t);		
 		}
 		
 		
 		
-		public static Context rejectTicket(Context ctx) {
+		public Context rejectTicket(Context ctx) {
 			int id = Integer.parseInt(ctx.formParam("ticketId"));
 			Ticket t = new Ticket();
-			t = ManagerService.rejectTicket(id);
+			t = ms.rejectTicket(id);
 			return ctx.json(t);		
 		}
 		
 		
-		public static Context changeStatusToPending(Context ctx) {
+		public Context changeStatusToPending(Context ctx) {
 			int id = Integer.parseInt(ctx.formParam("ticketId"));
 			Ticket t = new Ticket();
-			t = ManagerService.changeStatusToPending(id);
+			t = ms.changeStatusToPending(id);
 			return ctx.json(t);
 		}
 		
 		
 		
-		public static Context approveAllPendingTickets(Context ctx) {
+		public Context approveAllPendingTickets(Context ctx) {
 			List<Ticket> listOfTickets = new ArrayList<Ticket>();
-			listOfTickets = ManagerService.approveAllPendingTickets();
+			listOfTickets = ms.approveAllPendingTickets();
 			return ctx.json(listOfTickets);
 		}
 		
 		
-		public static Context getListOfEmployees(Context ctx) {
+		public Context getListOfEmployees(Context ctx) {
 			List<Employee> listOfEmployees = new ArrayList<Employee>();
-			listOfEmployees = ManagerService.getListOfEmployees();
+			listOfEmployees = ms.getListOfEmployees();
 			return ctx.json(listOfEmployees);
 		}
 		

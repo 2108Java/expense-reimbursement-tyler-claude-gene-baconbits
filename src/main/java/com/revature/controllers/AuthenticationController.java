@@ -28,7 +28,7 @@ public class AuthenticationController {
 		}
 
 
-	public void authenticateUser(Context ctx) throws ServletException, IOException {
+	public String authenticateUser(Context ctx) throws ServletException, IOException {
 		String username = ctx.formParam("username");
 		String password = ctx.formParam("password");
 
@@ -48,7 +48,7 @@ public class AuthenticationController {
 					ctx.sessionAttribute("access", "manager");
 					ctx.req.getRequestDispatcher("changeTicketStatus.html").forward(ctx.req, ctx.res);
 				} else { ctx.sessionAttribute("access", "employee");
-					ctx.req.getRequestDispatcher("landingPage.html").forward(ctx.req, ctx.res);
+					ctx.req.getRequestDispatcher("ticketLandingPage.html").forward(ctx.req, ctx.res);
 					} 
 				} finally {
 						ctx.res.setStatus(401);
@@ -56,6 +56,7 @@ public class AuthenticationController {
 						 ctx.json(emp); }
 							}
 			 catch (Exception e) { e.printStackTrace();}
+		return "/landingPage";
 	}
 	}
 

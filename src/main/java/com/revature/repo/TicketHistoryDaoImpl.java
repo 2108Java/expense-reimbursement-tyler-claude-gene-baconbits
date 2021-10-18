@@ -18,7 +18,6 @@ import com.revature.utilities.ConnectionDispatch;
 public class TicketHistoryDaoImpl implements TicketHistoryDao {
 
 	ConnectionDispatch dispatch = new ConnectionDispatch();
-	TicketDao tDao = new TicketDaoImp();
 	
 	Connection conn;
 	Employee emp;

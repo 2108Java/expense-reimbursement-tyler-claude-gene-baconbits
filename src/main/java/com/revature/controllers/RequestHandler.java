@@ -37,8 +37,7 @@ public class RequestHandler {
 					ctx.req.getRequestDispatcher("login.html").forward(ctx.req, ctx.res));
 				
 				app.post("/login", ctx -> 			
-						this.ac.authenticateUser(ctx));
-			
+						ctx.redirect(this.ac.authenticateUser(ctx)));
 			
 			
 				
@@ -63,7 +62,7 @@ public class RequestHandler {
 						} else {
 							ctx.res.sendRedirect("/login");
 						}				 
-						ctx.json(EmployeeTicketController.submitMyTicket(ctx)); 
+						ctx.json(ec.submitMyTicket(ctx)); 
 					});
 		
 			
@@ -75,7 +74,7 @@ public class RequestHandler {
 						} else {
 							ctx.res.sendRedirect("/login");
 						}
-						ctx.json(EmployeeTicketController.getAllMyTickets(ctx));
+						ctx.json(ec.getAllMyTickets(ctx));
 					});
 		
 					
