@@ -6,11 +6,13 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.Calendar;
+import java.util.List;
 import java.util.TimeZone;
 
 import com.revature.models.Employee;
 import com.revature.models.Ticket;
 import com.revature.models.TicketStatus;
+import com.revature.models.TicketStatusEvent;
 import com.revature.utilities.ConnectionDispatch;
 
 public class TicketHistoryDaoImpl implements TicketHistoryDao {
@@ -37,7 +39,7 @@ public class TicketHistoryDaoImpl implements TicketHistoryDao {
 		
 		try {
 			
-			dispatch.getConnection();
+			this.conn = dispatch.getConnection();
 			
 			PreparedStatement ps = conn.prepareStatement(sql);
 			
@@ -84,6 +86,12 @@ public class TicketHistoryDaoImpl implements TicketHistoryDao {
 	public boolean deleteTimeStamp() {
 		// TODO Auto-generated method stub
 		return false;
+	}
+
+	@Override
+	public List<TicketStatusEvent> selectAllTicketStatusEvents() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

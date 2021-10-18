@@ -6,39 +6,43 @@ import com.revature.models.Employee;
 import com.revature.models.Ticket;
 import com.revature.models.TicketStatusEvent;
 import com.revature.repo.EmployeeDao;
+import com.revature.repo.EmployeeDaoImpl;
 
-public interface EmployeeService {
+public class EmployeeService {
 
-	public static Employee getUserByUsername(String username) {
-		return EmployeeDao.selectUserByUsername(username);
+	private EmployeeDao empDao = new EmployeeDaoImpl();
+	
+	
+	public Employee getUserByUsername(String username) {
+		return empDao.selectByUserName(username);
 	}
 
-	public static Ticket submitTicketFromForm(Ticket t) {
-		return EmployeeDao.insertNewTicket(t);
+	public Ticket submitTicketFromForm(Ticket t) {
+		return empDao.insertNewTicket(t);
 	}
 
-	public static Ticket getMyTicketAndHist(int id) {
-		return EmployeeDao.selectUserTicket(id);
+	public Ticket getMyTicketAndHist(int id) {
+		return empDao.selectUserTicket(id);
 	}
 
-	public static List<TicketStatusEvent> getAllMyTicketHistory(int userId) {
-		return EmployeeDao.selectAllTicketHistoryForUser(userId);
+	public List<TicketStatusEvent> getAllMyTicketHistory(int userId) {
+		return empDao.selectAllTicketHistoryForUser(userId);
 	}
 
-	public static List<Ticket> getMyRejectedTickets(int userId) {
-		return EmployeeDao.selectRejectedTicketsForUser(userId);
+	public List<Ticket> getMyRejectedTickets(int userId) {
+		return empDao.selectRejectedTicketsForUser(userId);
 	}
 
-	public static List<Ticket> getMyApprovedTickets(int userId) {
-		return EmployeeDao.selectApprovedTicketsForUser(userId);
+	public List<Ticket> getMyApprovedTickets(int userId) {
+		return empDao.selectApprovedTicketsForUser(userId);
 	}
 
-	public static List<Ticket> getMyPendingTickets(int userId) {
-		return EmployeeDao.selectPendingTicketsForUser(userId);
+	public List<Ticket> getMyPendingTickets(int userId) {
+		return empDao.selectPendingTicketsForUser(userId);
 	}
 
-	public static List<Ticket> getAllTicketsForUser(int userId) {
-		return EmployeeDao.selectAllTicketsForUser(userId);
+	public List<Ticket> getAllTicketsForUser(int userId) {
+		return empDao.selectAllTicketsForUser(userId);
 	}
 
 }

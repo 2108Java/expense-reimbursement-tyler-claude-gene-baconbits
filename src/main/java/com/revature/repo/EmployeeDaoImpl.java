@@ -4,14 +4,17 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.List;
 
 import com.revature.models.Employee;
+import com.revature.models.Ticket;
+import com.revature.models.TicketStatusEvent;
 import com.revature.utilities.ConnectionDispatch;
 
 public class EmployeeDaoImpl implements EmployeeDao {
 
 	ConnectionDispatch dispatch = new ConnectionDispatch();
-	Connection conn;
+	Connection conn = null;
 	
 	@Override
 	public boolean insertEmployee(String username, String password, String first_name, String last_name, String email) {
@@ -26,7 +29,7 @@ public class EmployeeDaoImpl implements EmployeeDao {
 		
 		try { 
 			
-		dispatch.getConnection();
+		this.conn = dispatch.getConnection();
 		
 		ps = conn.prepareStatement(sql);
 		
@@ -55,7 +58,7 @@ public class EmployeeDaoImpl implements EmployeeDao {
 		String sql = "SELECT * FROM employee_table WHERE username = ?";
 	
 		try {
-			dispatch.getConnection();
+			this.conn = dispatch.getConnection();
 			
 			
 			
@@ -92,7 +95,7 @@ public class EmployeeDaoImpl implements EmployeeDao {
 		String sql = "SELECT * FROM employee_table WHERE employee_id = ?";
 		
 		try {
-			dispatch.getConnection();
+			this.conn = dispatch.getConnection();
 			
 			ps = conn.prepareStatement(sql);
 			
@@ -137,10 +140,10 @@ public class EmployeeDaoImpl implements EmployeeDao {
 	public boolean selectUserNameAndPass(String username, String password) {
 		boolean goodOps = false;
 		
-		String sql = "SELECT * FROM employee_table WHERE username = ? AND password = ?";
+		String sql = "SELECT * FROM employee_table WHERE username = ? AND pass_word = ?";
 		
 		try {
-			dispatch.getConnection();
+			this.conn = dispatch.getConnection();
 			
 			PreparedStatement ps = conn.prepareStatement(sql);
 			
@@ -165,7 +168,7 @@ public class EmployeeDaoImpl implements EmployeeDao {
 		String sql = "SELECT username FROM employee_table WHERE username = ?";
 		
 		try {
-			dispatch.getConnection();
+			this.conn = dispatch.getConnection();
 			
 			PreparedStatement ps = conn.prepareStatement(sql);
 			
@@ -179,6 +182,54 @@ public class EmployeeDaoImpl implements EmployeeDao {
 		}
 
 		return goodOps;
+	}
+
+	@Override
+	public Ticket insertNewTicket(Ticket t) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Ticket selectUserTicket(int id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<TicketStatusEvent> selectAllTicketHistoryForUser(int userId) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<Ticket> selectRejectedTicketsForUser(int userId) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<Ticket> selectApprovedTicketsForUser(int userId) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<Ticket> selectPendingTicketsForUser(int userId) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<Ticket> selectAllTicketsForUser(int userId) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<Employee> selectAllEmployees() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

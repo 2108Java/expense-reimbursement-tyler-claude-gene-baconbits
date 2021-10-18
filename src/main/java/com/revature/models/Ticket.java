@@ -1,7 +1,7 @@
 package com.revature.models;
 
 import java.util.Objects;
-
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.Calendar;
 import com.revature.repo.*;
@@ -22,6 +22,11 @@ public class Ticket {
 	public Ticket() {
 		super();
 		this.ticketHistory = TicketDao.selectAllStatusEventForTicket(this.id);
+	}
+
+
+	public Ticket(int i, int j, double d, String string, String string2, String string3, Date date) {
+		// TODO Auto-generated constructor stub
 	}
 
 

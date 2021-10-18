@@ -1,16 +1,19 @@
 package com.revature.service;
 
 import com.revature.repo.EmployeeDao;
+import com.revature.repo.EmployeeDaoImpl;
 
-public interface AuthenticationService {
+public class AuthenticationService {
 
-	public static boolean verify(String username) {
-		return EmployeeDao.selectCheckUserName();
+	private EmployeeDao empDao = new EmployeeDaoImpl();
+	
+	public boolean verify(String username) {
+		return empDao.selectCheckUserName(username);
 		
 	}
 	
-	public static boolean authenticate(String username, String password) {
-		return EmployeeDao.selectUserNameAndPass();
+	public boolean authenticate(String username, String password) {
+		return empDao.selectUserNameAndPass(username,password);
 	}
 	
 	

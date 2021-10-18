@@ -17,7 +17,9 @@ public class MainDriver {
 			)).start(8000);	//dao will be on Gene's RDS; front-end will be hosted on Tyler's EC2	
 	
 		
-		RequestHandler.setupEndPoints(app);
+		RequestHandler rh = new RequestHandler();
+		
+		rh.setupEndPoints(app);
 		
 	}
 

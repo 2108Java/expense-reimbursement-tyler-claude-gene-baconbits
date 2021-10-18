@@ -85,7 +85,7 @@ function loginUser(){
             console.log("This request was not found by server");
         }
 
-            return authorizedUser;
+            /* return authorizedUser; */
                  
     }
 

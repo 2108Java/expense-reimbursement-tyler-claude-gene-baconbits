@@ -4,54 +4,60 @@ import java.util.List;
 
 import com.revature.models.*;
 import com.revature.repo.EmployeeDao;
+import com.revature.repo.EmployeeDaoImpl;
 import com.revature.repo.TicketDao;
+import com.revature.repo.TicketDaoImp;
+import com.revature.repo.TicketHistoryDao;
+import com.revature.repo.TicketHistoryDaoImpl;
 
-public interface ManagerService {
+public class ManagerService {
 
-
-
-	public static List<Ticket> getAllPendingTickets() {
-		return TicketDao.selectAllPendingTickets();
+		private TicketDao tDao = new TicketDaoImp();
+		private EmployeeDao eDao = new EmployeeDaoImpl();
+		private TicketHistoryDao hDao = new TicketHistoryDaoImpl();
+		
+	public List<Ticket> getAllPendingTickets() {
+		return tDao.selectAllPendingTickets();
 	}
 
-	public static List<Ticket>  getAllApprovedTickets() {
-		return TicketDao.selectAllApprovedTickets();
+	public List<Ticket>  getAllApprovedTickets() {
+		return tDao.selectAllApprovedTickets();
 	}
 
-	public static List<Ticket> getAllRejectedTickets() {
-		return TicketDao.selectAllRejectedTickets();
+	public List<Ticket> getAllRejectedTickets() {
+		return tDao.selectAllRejectedTickets();
 	}
 
-	public static List<Ticket> getAllTickets() {
-		return TicketDao.selectAllApprovedTickets();
+	public List<Ticket> getAllTickets() {
+		return tDao.selectAllApprovedTickets();
 	}
 
-	public static List<TicketStatusEvent> getAllTicketStatusEvents() {
-		return TicketDao.selectAllTicketStatusEvents();
+	public List<TicketStatusEvent> getAllTicketStatusEvents() {
+		return hDao.selectAllTicketStatusEvents();
 	}
 
-	public static List<Ticket> getAllTicketsByEmployeeName(String empName) {
-		return TicketDao.selectTicketsByEmployeeName(empName);
+	public List<Ticket> getAllTicketsByEmployeeName(String empName) {
+		return tDao.selectTicketsByEmployeeName(empName);
 	}
 
-	public static Ticket approveTicket(int id) {
-		return TicketDao.updateStatusToApproved(id);			
+	public Ticket approveTicket(int id) {
+		return tDao.updateStatusToApproved(id);			
 	}
 
-	public static Ticket rejectTicket(int id) {
-		return TicketDao.updateStatusToRejected(id);			
+	public Ticket rejectTicket(int id) {
+		return tDao.updateStatusToRejected(id);			
 	}
 
-	public static Ticket changeStatusToPending(int id) {
-		return TicketDao.updateStatusToPending(id);		
+	public Ticket changeStatusToPending(int id) {
+		return tDao.updateStatusToPending(id);		
 	}
 
-	public static List<Ticket> approveAllPendingTickets() {
-		return TicketDao.updateAllPendingToApproved();
+	public List<Ticket> approveAllPendingTickets() {
+		return tDao.updateAllPendingToApproved();
 	}
 
-	public static List<Employee> getListOfEmployees() {
-		return EmployeeDao.selectAllEmployees();
+	public List<Employee> getListOfEmployees() {
+		return eDao.selectAllEmployees();
 	}
 
 

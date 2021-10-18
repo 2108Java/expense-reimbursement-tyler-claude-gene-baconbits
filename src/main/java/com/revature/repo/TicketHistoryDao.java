@@ -1,5 +1,9 @@
 package com.revature.repo;
 
+import java.util.List;
+
+import com.revature.models.TicketStatusEvent;
+
 public interface TicketHistoryDao {
 	
 	// Creates a new timestamp
@@ -29,6 +33,8 @@ public interface TicketHistoryDao {
 	// Delete a time stamp
 	
 	public boolean deleteTimeStamp();
+
+	public List<TicketStatusEvent> selectAllTicketStatusEvents();
 	
 
 }

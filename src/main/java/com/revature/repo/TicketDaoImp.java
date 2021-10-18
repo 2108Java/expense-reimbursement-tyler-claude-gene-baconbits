@@ -29,7 +29,7 @@ public class TicketDaoImp implements TicketDao {
 		String sql = "INSERT INTO ticket_table(employee_id, amount, type, description, status), VALUES (?, ?, ?, ?)";
 		
 		try {
-			dispatch.getConnection();
+			this.conn = dispatch.getConnection();
 			
 			PreparedStatement ps = conn.prepareStatement(sql);
 			
@@ -65,7 +65,7 @@ public class TicketDaoImp implements TicketDao {
 		String sql = "SELECT * FROM ticket_table ti RIGHT JOIN ticket_history_table WHERE ticket_id = ?";
 		
 		try {
-			dispatch.getConnection();
+			this.conn = dispatch.getConnection();
 	
 			ps = conn.prepareStatement(sql);
 			
@@ -105,6 +105,8 @@ public class TicketDaoImp implements TicketDao {
 		String sql = "SELECT * from ticket_table RIGHT JOIN ticket_history_table th ON ti.employee_id = ? AND ti.ticket_id = th.ticket_id ";
 		
 		try {
+			this.conn = dispatch.getConnection();
+
 			ps = conn.prepareStatement(sql);
 			
 			ps.setInt(1, employee_id);
@@ -135,6 +137,8 @@ public class TicketDaoImp implements TicketDao {
 		String sql = "SELECT * FROM ticket_table WHERE employee_id = ? AND status = ?";
 		
 		try {
+			this.conn = dispatch.getConnection();
+
 			ps = conn.prepareStatement(sql);
 			ps.setInt(1, employee_id);
 			ps.setString(2, status.name());
@@ -176,6 +180,7 @@ public class TicketDaoImp implements TicketDao {
 		String sql =  "SELECT * FROM ticket_table WHERE employee_id = ?";
 		
 		try {
+			this.conn = dispatch.getConnection();
 
 			ps = conn.prepareStatement(sql);
 			ps.setInt(1, employee_id);
@@ -216,6 +221,8 @@ public class TicketDaoImp implements TicketDao {
 		String sql = "SELECT * FROM ticket_table WHERE employee_id = ? AND status = ?";
 		
 		try {
+			this.conn = dispatch.getConnection();
+
 			ps = conn.prepareStatement(sql);
 
 			ps.setInt(1, employee_id);
@@ -258,6 +265,8 @@ ResultSet rs = ps.executeQuery();
 		String sql = "SELECT * FROM ticket_table";
 		
 		try {
+			this.conn = dispatch.getConnection();
+
 			ps = conn.prepareStatement(sql);
 
 			ResultSet rs = ps.executeQuery();
@@ -296,6 +305,8 @@ ResultSet rs = ps.executeQuery();
 		String sql = "UPDATE () IN ticket_table SET ()";
 		
 		try {
+			this.conn = dispatch.getConnection();
+
 			PreparedStatement ps = conn.prepareStatement(sql);
 			
 			success = ps.execute();
@@ -317,7 +328,8 @@ ResultSet rs = ps.executeQuery();
 		String sql = "UPDATE ticket_table SET status = ? WHERE employee_id = ?";
 		
 		try {
-			
+			this.conn = dispatch.getConnection();
+
 		PreparedStatement ps = conn.prepareStatement(sql);
 		
 		ps.setString(1, status.name());
@@ -340,7 +352,8 @@ ResultSet rs = ps.executeQuery();
 		String sql = "DELETE IN ticket_table WHERE id = ?";
 		
 		try {
-			
+			this.conn = dispatch.getConnection();
+
 			PreparedStatement ps = conn.prepareStatement(sql);
 			
 			ps.setInt(1, id);
@@ -353,6 +366,60 @@ ResultSet rs = ps.executeQuery();
 		}
 		
 		return success;
+	}
+
+	@Override
+	public ArrayList<TicketStatusEvent> selectAllStatusEventForTicket(int id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<Ticket> selectAllPendingTickets() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<Ticket> selectAllApprovedTickets() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<Ticket> selectAllRejectedTickets() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<Ticket> updateAllPendingToApproved() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Ticket updateStatusToPending(int id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Ticket updateStatusToRejected(int id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Ticket updateStatusToApproved(int id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<Ticket> selectTicketsByEmployeeName(String empName) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 	
 	
