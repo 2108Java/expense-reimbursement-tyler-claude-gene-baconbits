@@ -1,6 +1,7 @@
 package com.revature.repo;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import com.revature.models.RequestType;
@@ -42,7 +43,7 @@ public interface TicketDao {
 	
 	public boolean deleteTicket(int id);
 
-	public ArrayList<TicketStatusEvent> selectAllStatusEventForTicket(int id);
+	public Calendar selectAllStatusEventForTicket(int id);
 
 	public List<Ticket> selectAllPendingTickets();
 

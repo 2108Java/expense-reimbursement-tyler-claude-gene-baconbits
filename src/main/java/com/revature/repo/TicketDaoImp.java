@@ -5,6 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -26,7 +27,11 @@ public class TicketDaoImp implements TicketDao {
 	public boolean createTicket(int employee_id, double amount, RequestType type, String description, TicketStatus status) {
 		boolean success = false;
 		
-		String sql = "INSERT INTO ticket_table(employee_id, amount, type, description, status), VALUES (?, ?, ?, ?)";
+		
+		String sql = "BEGIN;\r\n"
+				+ "INSERT INTO ticket_table(employee_id, amount, request, description), VALUES (?, ?, ?);\r\n"
+				+ "INSERT INTO ticket_history(t_status, issue_date), VALUES (?, CURRENT_DATE);\r\n"
+				+ "COMMIT;";
 		
 		try {
 			this.conn = dispatch.getConnection();
@@ -78,9 +83,9 @@ public class TicketDaoImp implements TicketDao {
 				selectedTicket.setId(result.getInt("ticket_id"));
 				selectedTicket.setEmployeeId(result.getInt("employee_id"));
 				selectedTicket.setAmount(result.getDouble("amount"));
-				selectedTicket.setTypeString(result.getString("type"));
+				selectedTicket.setType(result.getString("type"));
 				selectedTicket.setDescription(result.getString("description"));
-				selectedTicket.setStatusString(result.getString("status"));
+				selectedTicket.setStatus(result.getString("status"));
 				
 				
 			}
@@ -141,7 +146,7 @@ public class TicketDaoImp implements TicketDao {
 
 			ps = conn.prepareStatement(sql);
 			ps.setInt(1, employee_id);
-			ps.setString(2, status.name());
+			ps.setString(2, status.toString());
 			
 			ResultSet rs = ps.executeQuery();
 			
@@ -369,7 +374,7 @@ ResultSet rs = ps.executeQuery();
 	}
 
 	@Override
-	public ArrayList<TicketStatusEvent> selectAllStatusEventForTicket(int id) {
+	public Calendar selectAllStatusEventForTicket(int id) {
 		// TODO Auto-generated method stub
 		return null;
 	}

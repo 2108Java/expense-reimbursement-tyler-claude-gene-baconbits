@@ -23,12 +23,11 @@ public class ManagerTicketsController {
 	
 
 		//FIELDS
-		ArrayList<Ticket> ticketListForMgrDisplay = new ArrayList<Ticket>();
 		private ManagerService ms = new ManagerService();
 
 		
 		//CONSTRUCTORS
-		public ManagerTicketsController(ManagerService mgrServ) {
+		public ManagerTicketsController(ManagerService ms) {
 			super();
 			this.ms = ms;
 		}
@@ -46,26 +45,27 @@ public class ManagerTicketsController {
 			List<Ticket> allTickets = new ArrayList<Ticket>();
 			allTickets = ms.getAllTickets();
 			return ctx.json(allTickets);
-				
+				// send POJOs and just use JS JSON.parse(); change return type to the POJO you wanna send
 		}
 		
 		
 		public Context getAllTicketsOfStatus(Context ctx){
-			TicketStatus status = TicketStatus.valueOf(ctx.formParam("selectedStatus"));
+			String status = ctx.formParam("selectedStatus");
 			switch (status) {
-				case PENDING:
+				case "PENDING":
 					return ctx.json(ms.getAllPendingTickets());
-				case APPROVED:
+				case "APPROVED":
 					return ctx.json(ms.getAllApprovedTickets());
-				case REJECTED:
+				case "REJECTED":
 					return ctx.json(ms.getAllRejectedTickets());
-				default:
+			}
 					return ctx;
 			}
-		}
+		
 		
 		
 
+		//get by status
 		public Context getAllPendingTickets(Context ctx) {
 			List<Ticket> allPendingTickets = new ArrayList<Ticket>();
 			allPendingTickets = ms.getAllPendingTickets();
@@ -92,28 +92,16 @@ public class ManagerTicketsController {
 		
 		
 		
-		public Context getAllTicketHistory(Context ctx) {
-			List<TicketStatusEvent> allTicketStatusEvents = new ArrayList<TicketStatusEvent>();
-			allTicketStatusEvents = ms.getAllTicketStatusEvents();
-			return ctx.json(allTicketStatusEvents);
-			
-		}
+		
 
-
-		
-		public Context getSomeTicketById(Context ctx) {
-			int id = Integer.parseInt(ctx.formParam("ticketId"));
-			Ticket t = new Ticket();
-			return ctx.json(t);
-		}
-		
-		
+		//get by emp name		
 		public Context getTicketsByEmployeeName(Context ctx) {
 			String empName = ctx.formParam("employeeName");
 			List<Ticket> ticketsForEmployee = new ArrayList<Ticket>();
 			ticketsForEmployee = ms.getAllTicketsByEmployeeName(empName);
 			return ctx.json(ticketsForEmployee);
 		}
+		
 		
 		
 		//METHODS for UPDATING TICKETS
@@ -143,17 +131,21 @@ public class ManagerTicketsController {
 		
 		
 		
-		public Context approveAllPendingTickets(Context ctx) {
-			List<Ticket> listOfTickets = new ArrayList<Ticket>();
-			listOfTickets = ms.approveAllPendingTickets();
-			return ctx.json(listOfTickets);
-		}
+
+
+
+		public Context updateWhichStatus(Context ctx) {
+				String status = ctx.formParam("new_status");
+				switch (status) {
+					case "PENDING":
+						this.changeStatusToPending(ctx);
+					case "APPROVED":
+						this.approveTicket(ctx);
+					case "REJECTED":
+						this.rejectTicket(ctx);
+				}
+						return this.getAllTickets(ctx);
+				}
 		
-		
-		public Context getListOfEmployees(Context ctx) {
-			List<Employee> listOfEmployees = new ArrayList<Employee>();
-			listOfEmployees = ms.getListOfEmployees();
-			return ctx.json(listOfEmployees);
-		}
 		
 }

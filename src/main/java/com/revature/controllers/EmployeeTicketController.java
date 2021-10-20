@@ -1,5 +1,6 @@
 package com.revature.controllers;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -19,11 +20,37 @@ public class EmployeeTicketController {
 	//FIELDS
 	ArrayList<Ticket> ticketListForEmpDisplay = new ArrayList<Ticket>();
 	private EmployeeService es = new EmployeeService();
-	
+	LocalDate local;
 	
 	
 	//METHODS
 		
+	public ArrayList<Ticket> getDummyList(Context ctx) {
+		
+		Ticket t1 = new Ticket (1,1,200.00,"had an expense","FOOD","PENDING", LocalDate.now().toString());
+		Ticket t2 = new Ticket (2,1,190.00,"had some other expense","TRAVEL","PENDING",LocalDate.now().toString());
+		Ticket t3 = new Ticket (3,1,180.00,"additional expense","LODGING","PENDING",LocalDate.now().toString());
+		Ticket t4 = new Ticket (4,1,170.00,"more expensive expense","OTHER","PENDING",LocalDate.now().toString());
+		Ticket t5 = new Ticket (5,2,160.25,"hotels","LODGING","APPROVED",LocalDate.now().toString());
+		Ticket t6 = new Ticket (6,2,150.55,"restaurants","FOOD","REJECTED",LocalDate.now().toString());
+		Ticket t7 = new Ticket (7,3,140.65,"car fare","TRAVEL","PENDING",LocalDate.now().toString());
+		Ticket t8 = new Ticket (8,4,135.95,"had some other expense","LODGING","PENDING",LocalDate.now().toString());
+		Ticket t9 = new Ticket (9,4,125.85,"had some other expense","OTHER","PENDING",LocalDate.now().toString());
+		ArrayList<Ticket> dummyList = new ArrayList<Ticket>();
+		dummyList.add(t1);
+		dummyList.add(t2);
+		dummyList.add(t3);
+		dummyList.add(t4);
+		dummyList.add(t5);
+		dummyList.add(t6);
+		dummyList.add(t7);
+		dummyList.add(t8);
+		dummyList.add(t9);
+		
+		ctx.res.setStatus(200);
+		return dummyList;
+		
+	}
 
 			public Context getAllMyTickets(Context ctx) {
 				int userId = Integer.parseInt(ctx.sessionAttribute("empId"));
@@ -106,8 +133,8 @@ public class EmployeeTicketController {
 				Ticket t = new Ticket();
 					t.setAmount(Double.parseDouble(ctx.formParam("amount")));
 					t.setDescription(ctx.formParam("description"));
-					t.setStatus(TicketStatus.PENDING);
-					t.setType(RequestType.valueOf(ctx.formParam("type")));
+					t.setStatus(TicketStatus.PENDING.toString());
+					t.setType(ctx.formParam("type"));
 					t.setEmployeeId(Integer.parseInt(ctx.sessionAttribute("empId")));
 				return ctx.json(es.submitTicketFromForm(t));
 			}

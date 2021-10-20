@@ -12,6 +12,7 @@ public class RequestHandler {
 				EmployeeTicketController ec = new EmployeeTicketController();
 				ManagerTicketsController mc = new ManagerTicketsController();
 	
+
 	
 	
 		//METHODS
@@ -27,43 +28,83 @@ public class RequestHandler {
 		
 		
 		public void setupEndPoints(Javalin app) {
-							
+
+			
+			
 			//endpoint for LOGIN page
-				app.get("/", ctx -> 
-					ctx.req.getRequestDispatcher("login.html").forward(ctx.req, ctx.res));
-				
-				
-				app.get("/login", ctx ->
-					ctx.req.getRequestDispatcher("login.html").forward(ctx.req, ctx.res));
-				
-				app.post("/login", ctx -> 			
-						ctx.redirect(this.ac.authenticateUser(ctx)));
+			app.get("/", ctx -> {
+				ctx.req.getRequestDispatcher("login.html").forward(ctx.req, ctx.res);	
+			});
+			
+			app.get("/login", ctx -> {
+				ctx.req.getRequestDispatcher("login.html").forward(ctx.req, ctx.res);
+			});
+			
+			app.post("/postLogin", ctx -> {	//this end point gets mentioned in xhttp obj in js!
+				ctx.redirect(this.ac.authenticateUser(ctx));
+			});
 			
 			
+			
+			//manager home
+			app.get("/managerHome", ctx -> {
+				if(ctx.sessionAttribute("access") == "manager") {
+				ctx.req.getRequestDispatcher("managerLanding.html").forward(ctx.req, ctx.res);
+				} else {
+					ctx.res.sendRedirect("/login");
+				}
+			});
+			
+			
+			app.post("/managerLanding.html", ctx -> { 
+						ctx.json(mc.getAllTickets(ctx));
+						});
+			
+			app.post("/changeTicket", ctx -> { //add to managerLanding.js
+						mc.updateWhichStatus(ctx);
 				
-			//endpoint for LANDING page
-				app.get("/landingPage", ctx -> {
-						if(checkSession(ctx)) {
-							ctx.req.getRequestDispatcher("ticketLandingPage.html").forward(ctx.req, ctx.res);
-						} else {
-							ctx.res.sendRedirect("/login");
-						} 
+			});
+			
+			
+						//possibly other app.post() to add for manager functions
+
+			
+
+			//employee home
+			app.get("/employeeHome", ctx -> {
+				if(ctx.sessionAttribute("user") != null) {
+				ctx.req.getRequestDispatcher("employeeLanding.html").forward(ctx.req, ctx.res);
+				} else {
+					ctx.res.sendRedirect("/login");
+				}
+			});
+			
+			
+			
+			app.post("/newTicket", ctx -> { //add to managerLanding.js
+				if(ctx.sessionAttribute("user") != null) { 
+					ec.submitMyTicket(ctx);
+				} else {
+					ctx.res.sendRedirect("/login");
+				}
+			});
+			
+
+			
+//			ctx.req.getRequestDispatcher("ticketLandingPage.html").forward(ctx.req, ctx.res);
+//			ctx.redirect("/managerHome", 200);
+//			
+//			
+//			
+//			//employee home
+//			ctx.req.getRequestDispatcher("changeTicketStatus.html").forward(ctx.req, ctx.res);
+//			ctx.redirect("/employeeHome", 200);
+		
 						
-					});
-						
 			
 			
 			
-			//endpoint for SUBMIT-TICKET
-				//don't use GET, because we don't want query-params displayed in search bar
-				app.post("/newTicket", ctx -> {
-						if(checkSession(ctx)) {
-							ctx.req.getRequestDispatcher("newTicket.html").forward(ctx.req, ctx.res);
-						} else {
-							ctx.res.sendRedirect("/login");
-						}				 
-						ctx.json(ec.submitMyTicket(ctx)); 
-					});
+
 		
 			
 				
@@ -76,30 +117,24 @@ public class RequestHandler {
 						}
 						ctx.json(ec.getAllMyTickets(ctx));
 					});
-		
-					
-			
-			//endpoint for UPDATE-TICKETS
-					//needs to be available only to managers, so write some logic using session-attribute
-					//isManager was included by Gene in EMPLOYEES table
-				app.get("/changeTicketStatus", ctx -> {
-					if(ctx.sessionAttribute("access") == "manager") {
-						ctx.req.getRequestDispatcher("changeTicketStatus.html").forward(ctx.req, ctx.res);
-					} else {
-						ctx.res.sendRedirect("/login");
-					}
 
+			
+				app.get("/dummy1", ctx -> {
+					ctx.req.getRequestDispatcher("test.html").forward(ctx.req, ctx.res);	
 				});
-			
-			
-			
-			
-			//endpoint for LOGOUT
-			app.get("/endSession", ctx -> ctx.consumeSessionAttribute("user"));		
-		
-		
-		}
-	
-	
-}
+					
+				app.post("/dummy2", ctx -> {	//this end point gets mentioned in xhttp obj in js!
+					ctx.json(ec.getDummyList(ctx)); 
+				});
+					
+				
 
+			
+//			//endpoint for LOGOUT
+			app.get("/endSession", ctx -> 
+				{  ctx.consumeSessionAttribute("user");
+					ctx.redirect("/", 200);
+				});	
+			}
+			}
+		

@@ -14,16 +14,13 @@ import com.revature.models.Ticket;
 
 public class ConnectionDispatch {
 
-	private static final String URL = "jdbc:postgresql://database-1.c53twceruauh.us-east-2.rds.amazonaws.com/";
+	private static final String URL = "jdbc:postgresql://database-1.cuxfgs7svfhd.us-east-2.rds.amazonaws.com/";
     private static final String USERNAME = "postgres";
-    private static final String PASSWORD = "d4t4Y0shi?";
+    private static final String PASSWORD = "49STOREdata40$16";
 	
-	PreparedStatement prepared; 
 	
-	Connection connect;
-	Employee worker;
-	Ticket ticket;
-	List<Ticket> tickets;
+	public Connection connect;
+
 	
 	public ConnectionDispatch() {
 		super();

@@ -21,7 +21,7 @@ public class EmployeeDaoImpl implements EmployeeDao {
 		
 		boolean success = false;
 		
-		String sql = "INSERT INTO employee_table(username, password, first_name, last_name, email, is_manager) VALUES (?,?,?,?,?,?)";
+		String sql = "INSERT INTO employee_table(username, pass_word, first_name, last_name, email, is_manager) VALUES (?,?,?,?,?,?)";
 		
 		
 		PreparedStatement ps;
@@ -71,19 +71,16 @@ public class EmployeeDaoImpl implements EmployeeDao {
 				
 				emp.setEmpId(rs.getInt("employee_id"));
 				emp.setUserName(rs.getString("username"));
-				emp.setPassword(rs.getString("password"));
+				emp.setPassword(rs.getString("pass_word"));
 				emp.setFirstName(rs.getString("first_name"));
 				emp.setLastName(rs.getString("last_name"));
 				emp.setEmail(rs.getString("email"));
 				emp.setManager(rs.getBoolean("is_manager"));
-				
+				return emp;
 			}
 			} catch (SQLException e) { 
 				e.printStackTrace();
 			}
-		
-		
-		
 		
 		return emp;
 	}
@@ -107,7 +104,7 @@ public class EmployeeDaoImpl implements EmployeeDao {
 				
 				emp.setEmpId(rs.getInt("employee_id"));
 				emp.setUserName(rs.getString("username"));
-				emp.setPassword(rs.getString("password"));
+				emp.setPassword(rs.getString("pass_word"));
 				emp.setFirstName(rs.getString("first_name"));
 				emp.setLastName(rs.getString("last_name"));
 				emp.setEmail(rs.getString("email"));

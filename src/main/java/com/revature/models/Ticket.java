@@ -2,121 +2,133 @@ package com.revature.models;
 
 import java.util.Objects;
 import java.sql.Date;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Calendar;
 import com.revature.repo.*;
 
 public class Ticket {
 
-	//FIELDS
-	private int id; //serial, primary key in database
-	private int employeeId; //person who is requesting reimbursement, foreignkey
-	private double amount;
-	private String description; //provided by employee on submission
-	private RequestType type; //lodging, travel, food, or other
-	private TicketStatus status; //approved, pending, or rejected
-	private ArrayList<TicketStatusEvent> ticketHistory;
+		//FIELDS
+		private int id; //serial, primary key in database
+		private int employeeId; //person who is requesting reimbursement, foreignkey
+		private double amount; //on submission
+		private String description; //provided by employee on submission
+		private String type; //lodging, travel, food, or other
+		private String status; //approved, pending, or rejected
+		private String date;
 
-	private TicketDao tDao = new TicketDaoImp();
-		
-	//CONSTRUCTORS
-	public Ticket() {
-		super();
-		this.ticketHistory = tDao.selectAllStatusEventForTicket(this.id);
-	}
+			
+		//CONSTRUCTORS
+		public Ticket() {
+			super();
 
-
-	public Ticket(int i, int j, double d, String string, String string2, String string3, Date date) {
-		// TODO Auto-generated constructor stub
-	}
+		}
 
 
-	public int getId() {
-		return id;
-	}
+		public Ticket(int i, int j, double d, String string, String string2, String string3) {
+			this.id = i;
+			this.employeeId = j;
+			this.amount = d;
+			this.description = string;
+			this.type = string2;
+			this.status = string3;
+			this.date = LocalDate.now().toString();		
+			}
 
 
-	public void setId(int id) {
-		this.id = id;
-	}
 
 
-	public int getEmployeeId() {
-		return employeeId;
-	}
+		public Ticket(int i, int j, double d, String string, String string2, String string3, String date) {
+			this.id = i;
+			this.employeeId = j;
+			this.amount = d;
+			this.description = string;
+			this.type = string2;
+			this.status = string3;
+			this.date = LocalDate.now().toString();		
+			}
 
 
-	public void setEmployeeId(int employeeId) {
-		this.employeeId = employeeId;
-	}
+		public int getId() {
+			return id;
+		}
 
 
-	public double getAmount() {
-		return amount;
-	}
+		public void setId(int id) {
+			this.id = id;
+		}
 
 
-	public void setAmount(double amount) {
-		this.amount = amount;
-	}
+		public int getEmployeeId() {
+			return employeeId;
+		}
 
 
-	public String getDescription() {
-		return description;
-	}
+		public void setEmployeeId(int employeeId) {
+			this.employeeId = employeeId;
+		}
 
 
-	public void setDescription(String description) {
-		this.description = description;
-	}
+		public double getAmount() {
+			return amount;
+		}
 
 
-	public RequestType getType() {
-		return type;
-	}
+		public void setAmount(double amount) {
+			this.amount = amount;
+		}
 
 
-	public void setType(RequestType type) {
-		this.type = type;
-	}
+		public String getDescription() {
+			return description;
+		}
 
 
-	public TicketStatus getStatus() {
-		return status;
-	}
+		public void setDescription(String description) {
+			this.description = description;
+		}
 
 
-	public void setStatus(TicketStatus status) {
-		this.status = status;
-	}
+		public String getType() {
+			return type;
+		}
 
 
-	public ArrayList<TicketStatusEvent> getTicketHistory() {
-		return ticketHistory;
-	}
+		public void setType(String type) {
+			this.type = type;
+		}
 
 
-	public void setTicketHistory(ArrayList<TicketStatusEvent> ticketHistory) {
-		this.ticketHistory = ticketHistory;
-	}
+		public String getStatus() {
+			return status;
+		}
+
+
+		public void setStatus(String status) {
+			this.status = status;
+		}
+
+
+
+
+
+		@Override
+		public String toString() {
+			return "TestTicket [id=" + id + ", employeeId=" + employeeId + ", amount=" + amount + ", description="
+					+ description + ", type=" + type + ", status=" + status + ", date=" + date + "]";
+		}
+
+
+		public String getDate() {
+			return date;
+		}
+
+
+		public void setDate(String date) {
+			this.date = date;
+		}
+
 
 	
-	//FOR WORKING WITH ENUMS
-	public String getTypeString() {
-        return type.name();
-    }
-
-	public void setTypeString(String type) {
-	        this.type = RequestType.valueOf(type);
-	    }
-	public String getStatusString() {
-	        return status.name();
-	    }
-	public void setStatusString(String status) {
-	        this.status = TicketStatus.valueOf(status);
-	    }
-
-
 }
-
-

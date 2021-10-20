@@ -29,10 +29,9 @@ public class AuthenticationController {
 
 
 	public String authenticateUser(Context ctx) throws ServletException, IOException {
-		String username = ctx.formParam("username");
-		String password = ctx.formParam("password");
+		String username = ctx.req.getParameter("username");
+		String password = ctx.req.getParameter("password");
 
-		try {
 			
 			try {
 			boolean authenticated = as.authenticate(username, password);
@@ -42,22 +41,21 @@ public class AuthenticationController {
 				this.emp = es.getUserByUsername(username);
 				ctx.sessionAttribute("user", username);
 				ctx.sessionAttribute("empId", emp.getEmpId());
-				ctx.json(emp);
-			} 
+				} 
 				if(emp.getIsManager()) {
 					ctx.sessionAttribute("access", "manager");
-					ctx.req.getRequestDispatcher("changeTicketStatus.html").forward(ctx.req, ctx.res);
-				} else { ctx.sessionAttribute("access", "employee");
-					ctx.req.getRequestDispatcher("ticketLandingPage.html").forward(ctx.req, ctx.res);
-					} 
+					ctx.redirect("/managerHome", 200);
+				} else { 
+					ctx.sessionAttribute("access", "employee");
+					ctx.redirect("/employeeHome", 200);
+					}
 				} finally {
-						ctx.res.setStatus(401);
-						ctx.redirect("/login"); 
-						 ctx.json(emp); }
-							}
-			 catch (Exception e) { e.printStackTrace();}
-		return "/landingPage";
+					ctx.res.setStatus(401);
+					ctx.redirect("/login");
+				}
+			return "/login";
 	}
-	}
+}
+	
 
 

@@ -14,7 +14,7 @@ public class MainDriver {
 			  {
 			    staticFiles.directory = "/public";  // the directory where your files are located in src>main>resources
 			  }
-			)).start(8000);	//dao will be on Gene's RDS; front-end will be hosted on Tyler's EC2	
+			)).start(8000);
 	
 		
 		RequestHandler rh = new RequestHandler();

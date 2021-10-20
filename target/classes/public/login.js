@@ -25,7 +25,7 @@ function Credential(username,password){
 function manipulateDOM(Employee) {
     console.log("the manipulateDOM function just started");
         // document.appendChild // this will be series of appends to display the logged in user
-
+	Window.alert("Your login was successful!");
 }
    
 
@@ -48,7 +48,6 @@ function loginUser(){
 
 
     //then specify the URL we want to trigger
-    const theURL = "https://"; //finish link? local uri? unneccessary?
 
 
     
@@ -91,7 +90,7 @@ function loginUser(){
 
     let data = JSON.stringify(loginAttempt);
 
-    xhttp.open("POST", "/login"); //config the url and the method
+    xhttp.open("POST", "http://localhost:8000/postLogin");
     console.log("xhttp is open");
     xhttp.send(data);
     console.log("xhttp has sent");

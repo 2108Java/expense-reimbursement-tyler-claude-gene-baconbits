@@ -17,6 +17,7 @@ function Ticket(id,empId,amount,description,type,status){
     }
 
 
+app.put("/m/{id}")
 
     
 function manipulateDOM(Ticket) { //remember to add Ticket param after test
@@ -120,7 +121,7 @@ manipulateDOM(submissionDetails);
 
   let data = JSON.stringify(submissionDetails);
 
-    xhttp.open("POST", "/newTicket"); //config the url and the method
+    xhttp.open("POST", "/newTicket"); //config the url and the method // full enough
     console.log("xhttp is open");
     xhttp.send(data);
     console.log("xhttp has sent");   

@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="ISO-8859-1">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <!-- <link rel="shortcut icon" href="#"> -->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
+        <title>Manager Home Page</title>
+    </head>
+<body>
+    <div class="container">
+		<br>
+		<h1>Welcome to the Manager Reimbursement Portal</h1>
+		<h2>Here you may review, sort, and approve or reject reimbursement tickets.</h2>
+    </div>
+
+
+    <div class="container">
+		<br>
+		<h4>Sort the Ticket Summary</h4>
+		<h4>Here are the sort buttons</h4> 
+		<div id="sort_buttons" class="form-control">
+				<!-- submit own ticket, sort by all, by empid/user, by status, by type -->
+		
+		</div>
+    </div>
+
+
+
+    <div class="container">
+        <br><br/>
+        <hr>
+        <!-- <form action="" method=""> --> <!--don't think I need this in a form-->
+            <table class="table">
+                <thead class="table-primary">
+                    <tr>
+                        <th colspan="8"><h2>Ticket Summary</h2></th>
+                    </tr>
+                    <tr>
+                        <th scope="col"><h4>Ticket #</h4></th>
+                        <th scope="col"><h4>Employee Id</h4></th>
+                        <th scope="col"><h4>Amount</h4></th>
+                        <th scope="col"><h4>Description<h4></h3></th>
+                        <th scope="col"><h4>Type of Request</h4></th>
+                        <th scope="col"><h4>Status</h4></th>
+                        <th scope="col"><h4>Last Change Date</h4></th>
+                        <th scope="col"><h4>Change Status</h4></th>
+                    </tr>
+                </thead>
+                <tbody id="landingTableBody">
+                    <tr scope="row" id= "ticket">
+                        <td id="ticket_id"></td>
+                        <td id="employee_id"></td>
+                        <td id="amount"></td>
+                        <td id="description"></td>
+                        <td id="request_type"></td>
+                        <td id="status"></td>
+                        <td id="date"></td>
+                        <td id="change_button">
+                        	<span><label for="change_button">Update Ticket Status?</label>
+                        		<select id="new_status">
+                            		<option value = "approved">APPROVED</option>
+			                            <option value = "pending">PENDING</option>
+			                            <option value = "rejected">REJECTED</option>
+			                            <input type="submit" id="update_ticket" value="Submit">
+                                </select></span></td>
+                	</tr>
+                </tbody>
+            </table>
+        <!-- </form> -->
+    </div>  
+
+ 
+
+
+    <footer>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ" crossorigin="anonymous"></script>
+    
+        <script src="managerLanding.js"></script>
+    </footer>
+</body>
+</html>

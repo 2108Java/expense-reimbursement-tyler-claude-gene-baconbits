@@ -39,9 +39,16 @@ public class TicketStatusEvent {
 			return newStatus;
 		}
 	
+//		public String getNewStatus() {
+//			return this.newStatus.valueOf(getNewStatusString());
+//		}
 	
 		public void setNewStatus(TicketStatus newStatus) {
 			this.newStatus = newStatus;
+		}
+		
+		public void setNewStatus(String newStatus) {
+			this.newStatus = TicketStatus.valueOf(newStatus);
 		}
 	
 	
