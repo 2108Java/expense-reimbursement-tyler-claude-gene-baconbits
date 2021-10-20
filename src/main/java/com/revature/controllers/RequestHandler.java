@@ -36,8 +36,10 @@ public class RequestHandler {
 				app.get("/login", ctx ->
 					ctx.req.getRequestDispatcher("login.html").forward(ctx.req, ctx.res));
 				
-				app.post("/login", ctx -> 			
-						this.ac.authenticateUser(ctx));
+				app.post("/authenticate", ctx -> 	{	
+					
+					ac.authenticateUser(ctx);
+				});
 			
 			
 			

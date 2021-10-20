@@ -17,7 +17,7 @@ public interface EmployeeDao {
 	
 	public Employee selectByUserName(String username);
 	
-	public boolean selectUserNameAndPass(String username, String password);
+	public Employee selectUserNameAndPass(String username, String password);
 	
 	public Employee selectEmployeeById(int id);
 	

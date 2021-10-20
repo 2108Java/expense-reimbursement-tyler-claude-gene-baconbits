@@ -140,8 +140,9 @@ public class EmployeeDaoImpl implements EmployeeDao {
 	}
 
 	@Override
-	public boolean selectUserNameAndPass(String username, String password) {
-		boolean goodOps = false;
+	public Employee selectUserNameAndPass(String username, String password) {
+		
+		Employee emp = new Employee();
 		
 		String sql = "SELECT * FROM employee_table WHERE username = ? AND pass_word = ?";
 		
@@ -153,7 +154,17 @@ public class EmployeeDaoImpl implements EmployeeDao {
 			ps.setString(1, username);
 			ps.setString(2, password);
 			
-			goodOps = ps.execute();
+			ResultSet results = ps.executeQuery();
+			
+			while(results.next()) {
+				
+				emp.setUserName(results.getString("username"));
+				emp.setPassword(results.getString("pass_word"));
+				emp.setFirstName(results.getString("first_name"));
+				emp.setLastName(results.getString("last_name"));
+				emp.setEmail(results.getString("email"));
+				
+			}
 			
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -161,7 +172,7 @@ public class EmployeeDaoImpl implements EmployeeDao {
 		}
 		
 		
-		return goodOps;
+		return emp;
 	}
 
 	@Override

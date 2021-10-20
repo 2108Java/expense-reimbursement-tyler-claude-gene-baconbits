@@ -24,39 +24,66 @@ public class AuthenticationController {
 	
 	//CONSTRUCTORS
 	public AuthenticationController() {
-		super();
-		}
+		
+		
+	}
 
 
 	public void authenticateUser(Context ctx) throws ServletException, IOException {
+		
 		String username = ctx.formParam("username");
 		String password = ctx.formParam("password");
 
-		try {
+			System.out.println("this is: " + username + "" + password);
 			
-			try {
+		try {
 			boolean authenticated = as.authenticate(username, password);
-			System.out.println(authenticated);
+			System.out.println("Authenticated is: " + authenticated);
+			
+			
 			if(authenticated) {
 				//if authenticated, send to home page and give session credential
 				this.emp = es.getUserByUsername(username);
 				ctx.sessionAttribute("user", username);
 				ctx.sessionAttribute("empId", emp.getEmpId());
 				ctx.json(emp);
+			
 			} 
-				if(emp.getIsManager()) {
-					ctx.sessionAttribute("access", "manager");
-					ctx.req.getRequestDispatcher("changeTicketStatus.html").forward(ctx.req, ctx.res);
-				} else { ctx.sessionAttribute("access", "employee");
-					ctx.req.getRequestDispatcher("landingPage.html").forward(ctx.req, ctx.res);
-					} 
-				} finally {
-						ctx.res.setStatus(401);
-						ctx.redirect("/login"); 
-						 ctx.json(emp); }
-							}
-			 catch (Exception e) { e.printStackTrace();}
+				
+			if(emp.getIsManager()) {
+					
+			
+				ctx.sessionAttribute("access", "manager");
+				
+				ctx.req.getRequestDispatcher("changeTicketStatus.html").forward(ctx.req, ctx.res);
+					
+				
+			} else { 
+				ctx.sessionAttribute("access", "employee");
+					
+				ctx.req.getRequestDispatcher("landingPage.html").forward(ctx.req, ctx.res);
+			
+					
+			} 
+			
+		}
+		catch (Exception e) {
+			
+			e.printStackTrace();
+				
+		} finally {
+						
+			ctx.res.setStatus(401);
+						
+			ctx.redirect("/login"); 
+						 
+			ctx.json(emp); 
+						
+				}
 	}
-	}
+							
+}
+	
+	
 
 
