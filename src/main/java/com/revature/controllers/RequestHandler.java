@@ -40,8 +40,8 @@ public class RequestHandler {
 				ctx.req.getRequestDispatcher("login.html").forward(ctx.req, ctx.res);
 			});
 			
-			app.post("/postLogin", ctx -> {	//this end point gets mentioned in xhttp obj in js!
-				ctx.redirect(this.ac.authenticateUser(ctx));
+			app.post("/login", ctx -> {
+				this.ac.authenticateUser(ctx);
 			});
 			
 			
@@ -53,6 +53,11 @@ public class RequestHandler {
 				} else {
 					ctx.res.sendRedirect("/login");
 				}
+			});
+			
+			app.get("/managerHomeTest", ctx -> {
+			
+				ctx.req.getRequestDispatcher("managerLanding.html").forward(ctx.req, ctx.res);
 			});
 			
 			
@@ -120,7 +125,7 @@ public class RequestHandler {
 
 			
 				app.get("/dummy1", ctx -> {
-					ctx.req.getRequestDispatcher("test.html").forward(ctx.req, ctx.res);	
+					ctx.req.getRequestDispatcher("testList.html").forward(ctx.req, ctx.res);	
 				});
 					
 				app.post("/dummy2", ctx -> {	//this end point gets mentioned in xhttp obj in js!

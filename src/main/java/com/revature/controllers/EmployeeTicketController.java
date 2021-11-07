@@ -45,8 +45,7 @@ public class EmployeeTicketController {
 		dummyList.add(t6);
 		dummyList.add(t7);
 		dummyList.add(t8);
-		dummyList.add(t9);
-		
+		dummyList.add(t9);		
 		ctx.res.setStatus(200);
 		return dummyList;
 		

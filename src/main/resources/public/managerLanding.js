@@ -4,7 +4,7 @@
 //will receive form input and send to authentication controller
 
 
-console.log("test.js is running");
+console.log("managerLanding.js is running");
 
 
 //constructors for each type, I think
@@ -17,7 +17,6 @@ function Ticket(id,employeeId,amount,description,type,status,date){
     this.type = type;
     this.status = status;
     this.date = date;
-	// private ArrayList<TicketStatusEvent> ticketHistory; //will display this separately, I think
     }
 
 

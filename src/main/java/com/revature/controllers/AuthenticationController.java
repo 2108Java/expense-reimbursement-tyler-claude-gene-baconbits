@@ -28,18 +28,21 @@ public class AuthenticationController {
 		}
 
 
-	public String authenticateUser(Context ctx) throws ServletException, IOException {
-		String username = ctx.req.getParameter("username");
-		String password = ctx.req.getParameter("password");
-
+	public void authenticateUser(Context ctx) throws ServletException, IOException {
+//		String map = ctx.formParams("username","password");
+		
+		String un = ctx.formParam("username");
+		String pw = ctx.formParam("password");
+			System.out.println("the username: " + un + " and the pass: " + pw); // returns null, but why?
+			System.out.println(ctx.formParamMap()); // returns map with values from html
 			
 			try {
-			boolean authenticated = as.authenticate(username, password);
+			boolean authenticated = as.authenticate(un, pw);
 			
 			if(authenticated) {
 				//if authenticated, send to home page and give session credential
-				this.emp = es.getUserByUsername(username);
-				ctx.sessionAttribute("user", username);
+				this.emp = es.getUserByUsername(un);
+				ctx.sessionAttribute("user", un);
 				ctx.sessionAttribute("empId", emp.getEmpId());
 				} 
 				if(emp.getIsManager()) {
@@ -53,7 +56,7 @@ public class AuthenticationController {
 					ctx.res.setStatus(401);
 					ctx.redirect("/login");
 				}
-			return "/login";
+//			return "/login";
 	}
 }
 	

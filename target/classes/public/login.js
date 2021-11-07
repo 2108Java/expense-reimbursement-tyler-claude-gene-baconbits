@@ -16,10 +16,13 @@ function Employee(empId,firstName,lastName,userName,email){
 	// this.isManager = isManager;  // don't need to keep because isManager will be stored as ctx.session attribute
     }
 
+
 function Credential(username,password){
     this.username = username;
     this.password = password;
 }
+
+
 
     
 function manipulateDOM(Employee) {
@@ -90,7 +93,7 @@ function loginUser(){
 
     let data = JSON.stringify(loginAttempt);
 
-    xhttp.open("POST", "http://localhost:8000/postLogin");
+    xhttp.open("POST", "http://localhost:8000/login");
     console.log("xhttp is open");
     xhttp.send(data);
     console.log("xhttp has sent");
